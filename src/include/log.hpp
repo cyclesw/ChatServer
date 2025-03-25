@@ -6,21 +6,22 @@
 #define LOG_HPP
 
 #ifdef Debug
-    #define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE_
+#define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE_
 #endif
 
-#include <spdlog/spdlog.h>
-#include <spdlog/sinks/stdout_color_sinks.h>
-#include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/async.h>
-#include <iostream>
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/spdlog.h>
 
-spdlog::async_logger
-
-inline void Init_Logger()
+struct LogSetting 
 {
+    
+};
 
+inline void Init_Logger() 
+{
+  
 }
 
-
-#endif //LOG_HPP
+#endif // LOG_HPP

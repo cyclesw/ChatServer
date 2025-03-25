@@ -12,7 +12,7 @@
         pkgs = import nixpkgs { inherit system; };
       });
 
-      cpprest = pkgs: pkgs.callPackage ./thirdparty/cpprestsdk.nix { };
+      cpprest = pkgs: pkgs.callPackage ./thirdparty/cpprestksdk.nix { };
     in
     {
       devShells = forEachSupportedSystem ({ pkgs }: {
@@ -36,7 +36,6 @@
               ninja
 
               ### 3td lib
-              openssl
               spdlog
               gflags
               gtest
@@ -47,6 +46,7 @@
               perl
               grpc
               abseil-cpp
+              openssl
               zlib
             ];
               
