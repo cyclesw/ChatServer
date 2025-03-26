@@ -1,6 +1,7 @@
-[submodule "thirdparty/etcd"]
-	path = thirdparty/etcd
-	url = https://github.com/etcd-cpp-apiv3/etcd-cpp-apiv3.git
 [submodule "thirdparty/brpc"]
 	path = thirdparty/brpc
 	url = https://github.com/apache/brpc.git
+[submodule "thirdparty/etcd-cpp-api"]
+	path = thirdparty/etcd-cpp-api
+	url = https://github.com/cyclesw/etcd-cpp-apiv3.git
+	branch = dev

@@ -3,28 +3,25 @@
   stdenv,
   fetchFromGitHub,
   cmake,
-  boost177,
-  openssl
+  boost,
+  openssl,
+  grpc,
+  cpprestsdk,
+  protobuf,
 }@ args:
 
 stdenv.mkDerivation rec{
-  pname = "cpprestsdk";
-  version = "2.10.19";
+  pname = "etcd-cpp-apiv3";
+  version = "unstable-2025-03-25";
 
   src = fetchFromGitHub ({
-    owner = "microsoft";
-    repo = "cpprestsdk";
-    rev = "v${version}";
-    sha256 = "sha256-zKam91x6wbG0vOxFXGQI/RKFf+fXGbn166YTjZUJ6yY=";
+    owner = "etcd-cpp-apiv3";
+    repo = "etcd-cpp-apiv3";
+    rev = "master";
+    sha256 = "sha256-l4csUmCp41WbVoOZkpVzqyE1nYu34wn6fsDGztWxQsE=";
   });
 
   buildInputs = [];
   nativeBuildInputs = [ cmake ];
-  propagatedBuildInputs = [ openssl boost177 zlib websocketpp];
-
-  cmakeFlags = [
-    "-DWERROR=OFF"
-    "-DCPPREST_EXCLUDE_WEBSOCKETS=ON"
-    "-DCPPREST_EXCLUDE_COMPRESSION=ON"
-  ];
+  propagatedBuildInputs = [ openssl boost grpc cpprestsdk protobuf];
 }
