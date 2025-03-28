@@ -12,13 +12,13 @@
 
 stdenv.mkDerivation rec{
   pname = "etcd-cpp-apiv3";
-  version = "unstable-2025-03-25";
+  version = "unstable";
 
   src = fetchFromGitHub ({
-    owner = "etcd-cpp-apiv3";
+    owner = "cyclesw";
     repo = "etcd-cpp-apiv3";
-    rev = "master";
-    sha256 = "sha256-l4csUmCp41WbVoOZkpVzqyE1nYu34wn6fsDGztWxQsE=";
+    rev = "fixSubmoduleHeadless";
+    sha256 = "sha256-vHL947OXKaTFjDGbXgstPuPY1kaPezdWRIA8EHxDfYA=";
   });
 
   buildInputs = [];
