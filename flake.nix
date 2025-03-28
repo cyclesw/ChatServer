@@ -1,7 +1,7 @@
 {
   description = "A Nix-flake-based C/C++ development environment";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
   outputs = { self, nixpkgs, }:
     let
@@ -12,7 +12,10 @@
         pkgs = import nixpkgs { inherit system; };
       });
 
-      cpprest = pkgs: pkgs.callPackage ./thirdparty/cpprestksdk.nix { };
+      cpprestsdk = pkgs: pkgs.callPackage ./thirdparty/cpprestksdk.nix { };
+      etcd-cpp-apiv3 = pkgs: pkgs.callPackage ./thirdparty/etcd-cpp-api.nix { 
+        cpprestsdk = cpprestsdk pkgs;
+      };
     in
     {
       devShells = forEachSupportedSystem ({ pkgs }: {
@@ -40,7 +43,8 @@
               gflags
               gtest
               protobuf
-              (cpprest pkgs)
+              (cpprestsdk pkgs)
+              (etcd-cpp-apiv3 pkgs)
 
               ## dependence
               perl
