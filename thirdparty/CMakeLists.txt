@@ -1,2 +1,2 @@
-# add_subdirectory(etcd-cpp-api)
+#add_subdirectory(etcd)
 # target_sources(etcd-cpp-apiv3)

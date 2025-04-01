@@ -19,9 +19,10 @@ namespace etcd {
 
 namespace ns_chat 
 {
-    class Registry 
+    class Registry
     {
     public:
+
         explicit Registry(const std::string& hostname);
 
         ~Registry();
@@ -38,7 +39,8 @@ namespace ns_chat
     public:
         using NotifyCallback = std::function<void(std::string, std::string)>;
 
-        Discovery(const std::string& hostname, const NotifyCallback& put_callback,
+        Discovery(const std::string& hostname, const std::string& basedir,
+            const NotifyCallback& put_callback,
             const NotifyCallback& del_callback);
 
         ~Discovery();
@@ -52,6 +54,8 @@ namespace ns_chat
         std::shared_ptr<etcd::Watcher> _watcher;
     };
 
+    using RegistryPtr = std::shared_ptr<Registry>;
+    using DiscoveryPtr = std::shared_ptr<Discovery>;
 }
 
 
