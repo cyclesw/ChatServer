@@ -25,6 +25,7 @@ find_package(PkgConfig REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(Protobuf CONFIG REQUIRED)
 find_package(gflags REQUIRED)
+find_package(OpenSSL REQUIRED)
 find_package(etcd-cpp-api CONFIG REQUIRED)
 
 pkg_check_modules(brpc REQUIRED IMPORTED_TARGET brpc)
