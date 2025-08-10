@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+import "base.proto";
+
+package im;
+
+option cc_generic_services = true;
+
+message GetSingleFileRequest {
+  string request_id = 1;
+  string file_id  = 2;
+  optional string user_id = 3;
+  optional string session_id = 4;
+}
+
+message GetSingleFileResponse {
+  string request_id = 1;
+  string error = 3;
+  bool success = 2;
+  optional FileDownloadData file_data = 4;
+}
+
+message GetMultiFileRequest {
+  string request_id = 1;
+  optional string user_id = 2;
+  optional string session_id = 3;
+  repeated string file_id_list = 4;
+}
+
+message GetMultiFileResponse {
+  string request_id = 1;
+  string error = 2;
+  bool success = 3;
+  map<string, FileDownloadData> file_data = 4;
+}
+
+message PutSingleFileRequest {
+  string request_id = 1;
+  optional string user_id = 2;
+  optional string session_id = 3;
+  FileUploadData file_data = 4;
+}
+
+message PutSingleFileResponse {
+  string request_id = 1;
+  string error = 2;
+  bool success = 3;
+  FileMessageInfo file_info = 4;
+}
+
+message PutMultiFileRequest {
+  string request_id = 1;
+  optional string user_id = 2;
+  optional string session_id = 3;
+  repeated FileUploadData file_data = 4;
+}
+
+message PutMultiFileResponse {
+  string request_id = 1;
+  string error = 2;
+  bool success = 3;
+  repeated FileMessageInfo file_info = 4;
+}
+
+service FileService {
+  rpc GetSingleFile(GetSingleFileRequest) returns (GetSingleFileResponse);
+  rpc GetMultiFile(GetMultiFileRequest)   returns (GetMultiFileResponse);
+  rpc PutSingleFile(PutSingleFileRequest) returns (PutSingleFileResponse);
+  rpc PutMultiFile(PutMultiFileRequest)   returns (PutMultiFileResponse);
+}

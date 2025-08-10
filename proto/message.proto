@@ -1,0 +1,54 @@
+syntax = "proto3";
+package im;
+import "base.proto";
+
+option cc_generic_services = true;
+message GetHistoryMsgRequest {
+    string request_id = 1;
+    string chat_session_id = 2;
+    int64 start_time = 3;
+    int64 over_time = 4;
+    optional string user_id = 5;
+    optional string session_id = 6;
+}
+message GetHistoryMsgResponse {
+    string request_id = 1;
+    bool success = 2;
+    string errmsg = 3; 
+    repeated MessageInfo msg_list = 4;
+}
+
+message GetRecentMsgRequest {
+    string request_id = 1;
+    string chat_session_id = 2;
+    int64 msg_count = 3;
+    optional int64 cur_time = 4;//用于扩展获取指定时间前的n条消息
+    optional string user_id = 5;
+    optional string session_id = 6;
+}
+message GetRecentMsgResponse {
+    string request_id = 1;
+    bool success = 2;
+    string errmsg = 3; 
+    repeated MessageInfo msg_list = 4;
+}
+
+message MsgSearchRequest {
+    string request_id = 1;
+    optional string user_id = 2;
+    optional string session_id = 3;
+    string chat_session_id = 4;
+    string search_key = 5;
+}
+message MsgSearchResponse {
+    string request_id = 1;
+    bool success = 2;
+    string errmsg = 3; 
+    repeated MessageInfo msg_list = 4;
+}
+
+service MsgStorageService {
+    rpc GetHistoryMsg(GetHistoryMsgRequest) returns (GetHistoryMsgResponse);
+    rpc GetRecentMsg(GetRecentMsgRequest) returns (GetRecentMsgResponse);
+    rpc MsgSearch(MsgSearchRequest) returns (MsgSearchResponse);
+}
