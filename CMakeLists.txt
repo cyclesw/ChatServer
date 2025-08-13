@@ -1,12 +1,17 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(GateWayServer LANGUAGES CXX)
+project(ChatServer LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS 1)
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
 set(PROTO_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated" CACHE STRING "Directory for generated protobuf files")
+set(ODB_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated")
+
+include_directories(common)
+include_directories(${CMAKE_SOURCE_DIR}/thirdparty)
+include_directories(${ODB_DIR})
 
 add_definitions(-DASIO_STANDALONE)
 
@@ -17,10 +22,11 @@ endif()
 
 include(cmake/CMakeLists.txt)
 
-set(MY_GLOBAL_VAR_STRING_NOFORCE "abcdef" CACHE STRING "定义一个STRING缓存变量")
+#set(MY_GLOBAL_VAR_STRING_NOFORCE "abcdef" CACHE STRING "定义一个STRING缓存变量")
 
 
 find_package(PkgConfig REQUIRED)
+find_package(Boost REQUIRED COMPONENTS random)
 find_package(websocketpp REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(Protobuf CONFIG REQUIRED)
@@ -30,10 +36,18 @@ find_package(OpenSSL REQUIRED)
 find_package(leveldb REQUIRED)
 find_package(httplib REQUIRED)
 find_package(etcd-cpp-api REQUIRED)
-find_package(jsoncpp REQUIRED)
+find_package(jsoncpp)
+if (NOT jsoncpp_FOUND)
+    pkg_check_modules(JSONCPP REQUIRED IMPORTED_TARGET jsoncpp)
+    add_library(JsonCpp::JsonCpp ALIAS PkgConfig::JSONCPP)
+endif()
 
 
 pkg_check_modules(REDISPP REQUIRED IMPORTED_TARGET redis++)
+pkg_check_modules(BRPC REQUIRED IMPORTED_TARGET brpc)
+pkg_check_modules(ODBCPP REQUIRED IMPORTED_TARGET libodb)
+pkg_check_modules(ODBCPP_MYSQL REQUIRED IMPORTED_TARGET libodb-mysql)
+pkg_check_modules(ODBCPP_BOOST REQUIRED IMPORTED_TARGET libodb-boost)
 
 set(ABSL_LIBS
     absl_str_format_internal
@@ -87,16 +101,9 @@ set(ABSL_LIBS
 # include_directories(${Protobuf_INCLUDE_DIRS})
 # include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-if (NOT HTTPLIB_LIBRARIES)
-    set(HTTPLIB_LIBRARIES httplib::httplib)
-endif()
-
-
-pkg_check_modules(BRPC REQUIRED IMPORTED_TARGET brpc)
 
 
 message(STATUS "---------------------------------------------------------------------")
-message(STATUS "HTTPLIB: ${HTTPLIB_LIBRARIES}")
 
 add_subdirectory(proto)
 add_subdirectory(src)

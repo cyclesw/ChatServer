@@ -7,6 +7,7 @@ function(GENERATE_PROTOBUF)
     get_filename_component(PROTO_NAME ${GEN_PROTO_FILE} NAME_WE)
     get_filename_component(PROTO_ABS_PATH ${GEN_PROTO_FILE} ABSOLUTE)
 
+
     # 设置生成的 .cc 和 .h 文件路径
     set(GEN_PROTO_SRC "${GEN_PROTO_OUTPUT_DIR}/${PROTO_NAME}.pb.cc")
     set(GEN_PROTO_HDR "${GEN_PROTO_OUTPUT_DIR}/${PROTO_NAME}.pb.h")
@@ -39,4 +40,10 @@ function(GENERATE_PROTOBUF)
 
     # 标记生成的文件为自动生成（避免 CMake 报错）
     set_source_files_properties(${GEN_PROTO_SRC} ${GEN_PROTO_HDR} PROPERTIES GENERATED TRUE)
+endfunction()
+
+function(GENERATE_ODB)
+#TODO implement
+set(oneValueArgs FILE OUTPUT_DIR)
+
 endfunction()

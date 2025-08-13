@@ -23,10 +23,6 @@ add_executable(file_server
 )
 
 
-
-include_directories(common)
-include_directories(${CMAKE_SOURCE_DIR}/thirdparty)
-
 target_include_directories(gateway PUBLIC "gateway")
 
 
@@ -70,7 +66,7 @@ target_link_libraries(gateway PUBLIC
         ${OPENSSL_LIBRARIES}
         ${REDISPP_LIBRARIES}
         ${ETCD_CPP_LIBRARIES}
-        ${HTTPLIB_LIBRARIES}
+        ${OPENSSL_LIBRARIES}
         ${ABSL_LIBS}
 
         # protobuf libs
@@ -82,7 +78,9 @@ target_link_libraries(gateway PUBLIC
         notify_proto
 
         # un
-        leveldb::leveldb
         websocketpp::websocketpp
+        httplib::httplib
         spdlog::spdlog
+
+        leveldb::leveldb
 )

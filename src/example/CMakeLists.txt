@@ -7,9 +7,11 @@ add_executable(gflags_test gflags/test.cc)
 add_executable(speech_test speech/test.cc )
 add_executable(speech_client_test speech/speech_client.cc ../etcd.cc ../channel.cc)
 add_executable(file_client_test file/test.cc ../etcd.cc ../channel.cc)
+add_executable(odbtest odb/test.cc
+        odb/person.hxx
+        odb/person-odb.cxx
+)
 
-
-# message(STATUS "absl: ${ABSL_LIBS}")
 include_directories(${CMAKE_SOURCE_DIR}/src/common)
 include_directories(${CMAKE_SOURCE_DIR}/thirdparty)
 
@@ -32,6 +34,7 @@ target_link_libraries(speech_client_test
         ${PROTOBUF_LIBRARIES}
         ${ETCD_CPP_LIBRARIES}
         ${BRPC_LIBRARIES}
+        ${Boost_LIBRARIES}
         ${ABSL_LIBS}
 
         speech_proto
@@ -59,4 +62,9 @@ target_link_libraries(speech_test
         curl
         crypto
         spdlog::spdlog
+)
+target_link_libraries(odbtest
+        PkgConfig::ODBCPP
+        PkgConfig::ODBCPP_MYSQL
+        PkgConfig::ODBCPP_BOOST
 )

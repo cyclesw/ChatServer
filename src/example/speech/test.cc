@@ -4,6 +4,7 @@
 
 #include <filesystem>
 
+//TODO: 项目完成关闭api密钥
 DEFINE_string(app_id, "116699311", "语音平台应用ID");
 DEFINE_string(api_key, "C1MwX3PbmzFE01KkVdIIRZKd", "语音平台API密钥");
 DEFINE_string(secret_key, "70GNIUw93umJDJb4qriFALRmDdkopBtk", "语音平台加密密钥");
