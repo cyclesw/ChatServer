@@ -7,11 +7,11 @@ set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS 1)
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
 set(PROTO_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated" CACHE STRING "Directory for generated protobuf files")
-set(ODB_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated")
+set(ODB_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated_odb")
 
-include_directories(common)
-include_directories(${CMAKE_SOURCE_DIR}/thirdparty)
-include_directories(${ODB_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/common)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/odb)
 
 add_definitions(-DASIO_STANDALONE)
 

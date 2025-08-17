@@ -1,4 +1,6 @@
+add_subdirectory(odb)
 add_subdirectory(example)
+
 
 #TODO: 是否需要objects
 
@@ -21,6 +23,11 @@ add_executable(file_server
         etcd.cc
         channel.cc
 )
+add_executable(user_server
+        user/user_server.cc
+        etcd.cc
+        channel.cc
+)
 
 
 target_include_directories(gateway PUBLIC "gateway")
@@ -34,7 +41,6 @@ target_link_libraries(file_server PUBLIC
         ${BRPC_LIBRARIES}
         ${ABSL_LIBS}
 
-        base_proto
         file_proto
 
         curl
@@ -83,4 +89,20 @@ target_link_libraries(gateway PUBLIC
         spdlog::spdlog
 
         leveldb::leveldb
+)
+target_link_libraries(user_server PUBLIC
+        ${BRPC_LIBRARIES}
+        ${PROTOBUF_LIBRARIES}
+        ${GFLAGS_LIBRARIES}
+        ${ETCD_CPP_LIBRARIES}
+        ${ABSL_LIBS}
+
+        user_proto
+        odb_user
+
+        spdlog::spdlog
+        leveldb::leveldb
+        PkgConfig::ODBCPP
+        PkgConfig::ODBCPP_MYSQL
+        PkgConfig::ODBCPP_BOOST
 )
