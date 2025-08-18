@@ -7,6 +7,7 @@
 
 #include <odb/nullable.hxx>
 #include <odb/core.hxx>
+#include <string>
 
 namespace im
 {

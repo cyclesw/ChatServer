@@ -57,20 +57,70 @@ public:
             res.reset(_db->query_one<User>(query::nickname == nickname));
             trans.commit();
         }catch (std::exception &e) {
-            LOG_ERROR("通过昵称查询用户失败 {}:{}！", nickname, e.what());
+            LOG_ERROR("通过昵称查询用户失败 {}:{}!", nickname, e.what());
         }
         return res;
-
     }
 
-    // std::shared_ptr<User> SelectByPhone(const std::string& phone)
-    // {}
-    //
-    // std::shared_ptr<User> SelectById(const std::string& user_id)
-    // {}
-    //
-    // std::vector<User> SelectMultiUsers(const std::vector<std::string>& id_list)
-    // {}
+    std::shared_ptr<User> SelectByPhone(const std::string& phone)
+    {
+        std::shared_ptr<User> res;
+        try {
+            odb::transaction trans(_db->begin());
+            typedef odb::query<User> query;
+            typedef odb::result<User> result;
+            res.reset(_db->query_one<User>(query::phone == phone));
+            trans.commit();
+        }catch (std::exception &e) {
+            LOG_ERROR("通过手机号查询用户失败 {}:{}!", phone, e.what());
+        }
+        return res;
+    }
+    
+    std::shared_ptr<User> SelectById(const std::string& user_id)
+    {
+        std::shared_ptr<User> res;
+        try {
+            odb::transaction trans(_db->begin());
+            typedef odb::query<User> query;
+            typedef odb::result<User> result;
+            res.reset(_db->query_one<User>(query::user_id == user_id));
+            trans.commit();
+        }catch (std::exception &e) {
+            LOG_ERROR("通过用户ID查询用户失败 {}:{}!", user_id, e.what());
+        }
+        return res;
+    }
+    
+    std::vector<User> SelectMultiUsers(const std::vector<std::string>& id_list)
+    {
+            // select * from user where id in ('id1', 'id2', ...)
+            if (id_list.empty()) {
+                return std::vector<User>();
+            }
+            std::vector<User> res;
+            try {
+                odb::transaction trans(_db->begin());
+                typedef odb::query<User> query;
+                typedef odb::result<User> result;
+                std::stringstream ss;
+                ss << "user_id in (";
+                for (const auto &id : id_list) {
+                    ss << "'" << id << "',";
+                }
+                std::string condition = ss.str();
+                condition.pop_back();
+                condition += ")";
+                result r(_db->query<User>(condition));
+                for (result::iterator i(r.begin()); i != r.end(); ++i) {
+                    res.push_back(*i);
+                }
+                trans.commit();
+            }catch (std::exception &e) {
+                LOG_ERROR("通过用户ID批量查询用户失败:{}!", e.what());
+            }
+            return res;
+    }
 private:
     std::shared_ptr<odb::core::database> _db;
 };

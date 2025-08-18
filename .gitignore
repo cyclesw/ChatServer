@@ -45,3 +45,5 @@
 .idea/
 .vs/
 .vscode/
+.direnv/
+.cache/

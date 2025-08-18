@@ -18,6 +18,10 @@
       etcd-cpp-apiv3 = pkgs: pkgs.callPackage ./thirdparty/etcd-cpp-api.nix {
         cpprestsdk = cpprestsdk pkgs;
       };
+      odb = pkgs: pkgs.callPackage ./thirdparty/odb.nix {};
+      libodb-mysql = pkgs: pkgs.callPackage ./thirdparty/libodb-mysql.nix {};
+      libodb-boost = pkgs: pkgs.callPackage ./thirdparty/libodb-boost.nix {};
+      mysqlclient = pkgs: pkgs.callPackage ./thirdparty/mysqlclient.nix {};
 
    in
     {
@@ -36,10 +40,12 @@
               llvmPackages_latest.lldb
               llvmPackages_latest.libstdcxxClang
               clang-tools
+              gcc  # for odb compiler
 
               cmake
               pkg-config
               ninja
+              (odb pkgs)
 
               protols
 
@@ -52,9 +58,13 @@
               jsoncpp
               gflags
               gtest
+              libodb
+              (libodb-mysql pkgs)
+              (libodb-boost pkgs)
               (brpc pkgs)
               (etcd-cpp-apiv3 pkgs)
               (cpprestsdk pkgs)
+              (mysqlclient pkgs)
 
               curl
               leveldb

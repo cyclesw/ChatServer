@@ -1,5 +1,13 @@
 find_package(GTest REQUIRED)
 
+generate_odb_files(
+        INPUT ${CMAKE_CURRENT_SOURCE_DIR}/odb/person.hxx
+        OUTPUT_DIR "${ODB_DIR}/person"
+        DATABASE mysql
+        STD 17
+        PROFILE boost/date-time
+)
+
 add_executable(websocketpp_test websocketpp/test.cc)
 add_executable(proto_test protobuf/test.cc)
 add_executable(httplib_test httplib/test.cc)
@@ -8,8 +16,6 @@ add_executable(speech_test speech/test.cc )
 add_executable(speech_client_test speech/speech_client.cc ../etcd.cc ../channel.cc)
 add_executable(file_client_test file/test.cc ../etcd.cc ../channel.cc)
 add_executable(odbtest odb/test.cc
-        odb/person.hxx
-        odb/person-odb.cxx
 )
 
 include_directories(${CMAKE_SOURCE_DIR}/src/common)
@@ -64,6 +70,8 @@ target_link_libraries(speech_test
         spdlog::spdlog
 )
 target_link_libraries(odbtest
+        odb_person
+
         PkgConfig::ODBCPP
         PkgConfig::ODBCPP_MYSQL
         PkgConfig::ODBCPP_BOOST

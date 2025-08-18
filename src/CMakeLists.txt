@@ -29,6 +29,10 @@ add_executable(user_server
         channel.cc
 )
 
+add_executable(user_test_1 
+        user/test/mysql_test.cc
+)
+
 
 target_include_directories(gateway PUBLIC "gateway")
 
@@ -102,6 +106,20 @@ target_link_libraries(user_server PUBLIC
 
         spdlog::spdlog
         leveldb::leveldb
+        PkgConfig::ODBCPP
+        PkgConfig::ODBCPP_MYSQL
+        PkgConfig::ODBCPP_BOOST
+)
+target_link_libraries(user_test_1
+        ${PROTOBUF_LIBRARIES}
+        ${GFLAGS_LIBRARIES}
+        ${ETCD_CPP_LIBRARIES}
+        ${ABSL_LIBS}
+
+        user_proto
+        odb_user
+
+        spdlog::spdlog
         PkgConfig::ODBCPP
         PkgConfig::ODBCPP_MYSQL
         PkgConfig::ODBCPP_BOOST

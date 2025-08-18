@@ -23,6 +23,11 @@ stdenv.mkDerivation rec{
     sha256 = "sha256-BKT3oaFR3fAet96w1b+fAsS48M5DcmPdFdYeTWMZPLY=";
   });
 
+  outputs = [
+    "out"
+    "dev"
+  ];
+
   nativeBuildInputs = [ cmake ];
   buildInputs = [ gtest ];
   propagatedBuildInputs = [ openssl zlib leveldb protobuf_28 gflags gperftools ];
