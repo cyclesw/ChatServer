@@ -74,6 +74,7 @@ function(generate_odb_files)
     # 获取文件名（不含路径、不含扩展名）
     get_filename_component(name_we  "${O_INPUT}" NAME_WE)
     get_filename_component(abs_in   "${O_INPUT}" ABSOLUTE)
+    get_filename_component(pre_dir  "${O_INPUT}" DIRECTORY)    # fix up head file can't found
 
     # 生成的文件列表
     set(out_cxx "${O_OUTPUT_DIR}/${name_we}-odb.cxx")
@@ -114,8 +115,8 @@ function(generate_odb_files)
 
     # 提供一个接口库，把生成目录塞进 include path
     add_library(odb_${name_we} INTERFACE)
-    target_include_directories(odb_${name_we} INTERFACE ${O_OUTPUT_DIR})
-    target_sources(odb_${name_we} INTERFACE ${out_cxx} ${out_odb})
+    target_include_directories(odb_${name_we} INTERFACE ${O_OUTPUT_DIR} ${pre_dir})
+    target_sources(odb_${name_we} INTERFACE ${out_cxx} ${out_odb} )
     add_dependencies(odb_${name_we} odb_${name_we}_code)
 
     # 通常还需要 ODB 运行时库；这里把责任推给调用者
