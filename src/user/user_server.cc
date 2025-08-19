@@ -1,4 +1,4 @@
-#include "mysql_user.hpp"
+#include "user_table.hpp"
 
 int main()
 {

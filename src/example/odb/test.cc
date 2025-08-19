@@ -11,7 +11,7 @@
 int main()
 {
     std::shared_ptr<odb::core::database> db(
-        new odb::mysql::database("root", "123456",
+        new odb::mysql::database("test", "123456",
             "TestDB", "127.0.0.1", 0, 0, "utf8"));
     if (!db) { return -1; }
 

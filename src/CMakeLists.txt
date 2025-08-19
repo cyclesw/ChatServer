@@ -32,6 +32,9 @@ add_executable(user_server
 add_executable(user_test_1 
         user/test/mysql_test.cc
 )
+add_executable(redis_test_1
+        user/test/redis_test.cc
+)
 
 
 target_include_directories(gateway PUBLIC "gateway")
@@ -123,4 +126,8 @@ target_link_libraries(user_test_1
         PkgConfig::ODBCPP
         PkgConfig::ODBCPP_MYSQL
         PkgConfig::ODBCPP_BOOST
+)
+target_link_libraries(redis_test_1
+        ${GFLAGS_LIBRARIES}
+        PkgConfig::REDISPP
 )

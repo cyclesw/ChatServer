@@ -1,8 +1,8 @@
 #include "mysql.hpp"
-#include "mysql_user.hpp"
-#include "user.hxx"
 #include "user-odb.hxx"
-#include <gflags/gflags.h>  
+#include "user_table.hpp"
+#include "user_table.hxx"
+#include <gflags/gflags.h>
 
 DEFINE_bool(run_mode, false, "程序的运行模式，false-调试； true-发布；");
 DEFINE_string(log_file, "", "发布模式下，用于指定日志的输出文件");
@@ -49,13 +49,13 @@ int main(int argc, char* argv[])
 {    
     google::ParseCommandLineFlags(&argc, &argv, true);
 
-    auto db = im::ODBFactory::create("test", "123456", "localhost", "test_db", "utf8", 0, 1);
+    auto db = im::ODBFactory::create("test", "123456", "127.0.0.1", "TestDB", "utf8", 0, 1);
 
     im::UserTable user(db);
 
     insert(user);
-    // update_by_id(user);
-    //update_by_phone(user);
-    //update_by_nickname(user);
-    // select_users(user);
+    update_by_id(user);
+    update_by_phone(user);
+    update_by_nickname(user);
+    select_users(user);
 }

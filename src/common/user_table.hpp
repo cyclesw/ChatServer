@@ -1,8 +1,8 @@
 #pragma once
 #include "log.hpp"
-#include "user.hxx"
-#include "user-odb.hxx"
 #include "mysql.hpp"
+#include "user-odb.hxx"
+#include "user_table.hxx"
 
 #include <memory>
 
