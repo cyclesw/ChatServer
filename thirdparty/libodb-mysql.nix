@@ -42,7 +42,7 @@ in
 
 stdenv.mkDerivation rec {
   pname = "libodb-mysql";
-  version = "2.5.0-b.27";
+  version = "2.5.0";
 
   outputs = [
     "out"
@@ -51,8 +51,8 @@ stdenv.mkDerivation rec {
   ];
 
   src = fetchurl {
-    url = "https://pkg.cppget.org/1/beta/odb/libodb-mysql-${version}.tar.gz";
-    hash = "sha256-0En5ilyFjR7d3RV3Z/vwqvHioXc00HKdCMmpMLG60Pw=";
+    url = "https://pkg.cppget.org/1/stable/odb/libodb-mysql-${version}.tar.gz";
+    hash = "sha256-RWvCYksjKhBmzCJQOhmwSS0Xtb1C7vOw26fqhceOcF8=";
   };
 
   nativeBuildInputs = [

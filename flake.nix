@@ -19,17 +19,19 @@
         cpprestsdk = cpprestsdk pkgs;
       };
       odb = pkgs: pkgs.callPackage ./thirdparty/odb.nix {};
-      libodb-mysql = pkgs: pkgs.callPackage ./thirdparty/libodb-mysql.nix {};
+      libodb = pkgs: pkgs.callPackage ./thirdparty/libodb.nix {};
+      libodb-mysql = pkgs: pkgs.callPackage ./thirdparty/libodb-mysql.nix {
+        libodb = libodb pkgs;
+      };
       libodb-boost = pkgs: pkgs.callPackage ./thirdparty/libodb-boost.nix {};
-      mysqlclient = pkgs: pkgs.callPackage ./thirdparty/mysqlclient.nix {};
-
+      libmysqlclient = pkgs: pkgs.callPackage ./thirdparty/libmysqlclient.nix {};
    in
     {
       devShells = forEachSupportedSystem ({ pkgs }: {
         default = pkgs.mkShell.override
           {
             # Override stdenv in order to change compiler:
-           stdenv = pkgs.clangStdenv;
+          #  stdenv = pkgs.clangStdenv;
           }
           {
             packages = with pkgs; [
@@ -58,13 +60,14 @@
               jsoncpp
               gflags
               gtest
-              libodb
+              
+              (libodb pkgs)
               (libodb-mysql pkgs)
               (libodb-boost pkgs)
               (brpc pkgs)
               (etcd-cpp-apiv3 pkgs)
               (cpprestsdk pkgs)
-              (mysqlclient pkgs)
+              (libmysqlclient pkgs)
 
               curl
               leveldb

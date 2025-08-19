@@ -9,13 +9,13 @@
 let
   libcutl = stdenv.mkDerivation rec {
     pname   = "libcutl";
-    version = "1.11.0-b.9+1";   
+    version = "1.11.0";   
 
     outputs = [ "out" "dev" ];
 
     src = fetchurl {
-      url    = "https://pkg.cppget.org/1/beta/libcutl/libcutl-${version}.tar.gz";
-      sha256 = "sha256-GY443axh8jNGhlCenZcme3bnbf3mw3ic3RNSTzHxFHY=";   
+      url    = "https://pkg.cppget.org/1/stable/libcutl/libcutl-${version}.tar.gz";
+      sha256 = "sha256-vsGDcxwcAbnfoanoNaJSJ8+2JtKcus0z33V34KUL4vk=";   
     };
 
     nativeBuildInputs = [ build2 ];
@@ -29,7 +29,7 @@ let
 in
 stdenv.mkDerivation rec {
   pname   = "odb";
-  version = "2.5.0-b.27";
+  version = "2.5.0";
 
   outputs = [
      "out"
@@ -38,8 +38,8 @@ stdenv.mkDerivation rec {
   ];
 
   src = fetchurl {
-    url    = "https://pkg.cppget.org/1/beta/odb/odb-${version}.tar.gz";
-    sha256 = "sha256-aBUtJPnXpm/7b4QjUpJNP6tmDR1FZ/kyIebhA4ZzlkI=";   
+    url    = "https://pkg.cppget.org/1/stable/odb/odb-${version}.tar.gz";
+    sha256 = "sha256-kVEXKQf40BFqZCmyWdzJAM7QopkqXrYUS45MoFJfxkg=";   
   };
 
   nativeBuildInputs = [ build2 ];
