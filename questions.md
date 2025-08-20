@@ -1,6 +1,9 @@
 # 依赖问题
 
 1. odb-c++->libssl-1  httplib->libssl-3
+2. elasticlient -> libjsoncpp19 & libjsoncpp25
+
+f**k the C++
 
 
 # 服务器问题
