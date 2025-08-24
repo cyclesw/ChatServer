@@ -5,6 +5,8 @@
 
 f**k the C++
 
-
 # 服务器问题
 1. nixos 中无法正常使用elasticsearch，会破坏系统配置
+
+# 定义冲突
+1. brpc、 redis++  REDIS_REPLY_STRING 冲突

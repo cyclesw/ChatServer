@@ -4,6 +4,11 @@ package im;
 
 option cc_generic_services = true;
 
+//TODO:
+// 1. 错误码
+// 2. 验证码过期时间+ 登录无验证码判断
+// 3.
+
 //用户信息结构
 message UserInfo {
   string user_id = 1;//用户ID

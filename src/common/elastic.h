@@ -23,7 +23,8 @@ class ESUser
 {
 public:
     using Ptr = std::shared_ptr<ESUser>;
-    ESUser(const std::shared_ptr<elasticlient::Client>& client);
+
+    explicit ESUser(const std::shared_ptr<elasticlient::Client>& client);
 
     bool CreateIndex();
 

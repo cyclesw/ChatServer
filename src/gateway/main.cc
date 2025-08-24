@@ -1,4 +1,4 @@
-#include "gateway/server.h"
+#include "server.h"
 
 #include <gflags/gflags.h>
 #include <log.hpp>

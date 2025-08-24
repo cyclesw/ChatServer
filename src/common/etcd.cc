@@ -29,7 +29,7 @@ bool Register::Registry(const std::string &key, const std::string &value)
     auto resp = _client->put(key, value, _lease_id).get();
     if (resp.is_ok() == false)
     {
-        LOG_ERROR("注册服务失败: {}-{}");
+        LOG_ERROR("注册服务失败: {}-{}", key, value);
         return false;
     }
     return true;

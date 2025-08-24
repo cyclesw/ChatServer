@@ -3,9 +3,10 @@ file(GLOB PROTO_FILES *.proto)
 
 set(PROTO_DEPENDS_user "base.proto")
 set(PROTO_DEPENDS_notify "base.proto")
- set(PROTO_DEPENDS_message "base.proto")
+set(PROTO_DEPENDS_message "base.proto")
 set(PROTO_DEPENDS_friend "base.proto")
 set(PROTO_DEPENDS_file "base.proto")
+set(PROTO_DEPENDS_transmit "base.proto")
 
 # 为文件添加DEPENDS
 foreach(FILE ${PROTO_FILES})

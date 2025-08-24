@@ -1,4 +1,4 @@
-add_executable(file_client_exam test.cc ../../etcd.cc ../../channel.cc)
+add_executable(file_client_exam test.cc ../../common/etcd.cc ../../common/channel.cc)
 target_link_libraries(file_client_exam
         ${GFLAGS_LIBRARIES}
         ${ETCD_CPP_LIBRARIES}

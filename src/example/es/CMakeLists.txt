@@ -1,6 +1,6 @@
 add_executable(es_exam
         test.cc
-        ../../es.cc
+        ../../common/es.cc
 )
 
 target_link_libraries(es_exam

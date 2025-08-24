@@ -1,4 +1,4 @@
-#include "redis.hpp"
+#include "../../common/database/redis.hpp"
 
 #include <gflags/gflags.h>
 #include <iostream>

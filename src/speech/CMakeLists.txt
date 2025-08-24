@@ -1,6 +1,6 @@
 add_executable(speech_server
         speech_server.cc
-        ../etcd.cc
+        ../common/etcd.cc
 )
 
 target_link_libraries(speech_server PUBLIC

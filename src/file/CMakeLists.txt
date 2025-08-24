@@ -1,8 +1,8 @@
 add_executable(file_server
         file_server.cc
 
-        ../etcd.cc
-        ../channel.cc
+        ../common/etcd.cc
+        ../common/channel.cc
 )
 target_link_libraries(file_server PUBLIC
         ${GFLAGS_LIBRARIES}

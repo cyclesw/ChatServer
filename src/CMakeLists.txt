@@ -3,16 +3,16 @@ add_subdirectory(example)
 add_subdirectory(speech)
 add_subdirectory(user)
 add_subdirectory(file)
+add_subdirectory(transmit)
 
 
 add_executable(gateway
         common/log.hpp
-        common/redis.hpp
-        main.cc
-        connection.cc
-        channel.cc
-        server.cc
-        etcd.cc
+        gateway/main.cc
+        gateway/connection.cc
+        common/channel.cc
+        gateway/server.cc
+        common/etcd.cc
 )
 
 

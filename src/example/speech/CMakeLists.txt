@@ -8,7 +8,7 @@ target_link_libraries(speech_exam
         spdlog::spdlog
 )
 
-add_executable(speech_client_exam speech_client.cc ../../etcd.cc ../../channel.cc)
+add_executable(speech_client_exam speech_client.cc ../../common/etcd.cc ../../common/channel.cc)
 target_link_libraries(speech_client_exam
         ${GFLAGS_LIBRARIES}
         ${PROTOBUF_LIBRARIES}

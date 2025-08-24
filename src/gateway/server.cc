@@ -1,13 +1,13 @@
 //
 // Created by 19396 on 25-5-15.
 //
-#include "gateway/server.h"
+#include "server.h"
 
+#include "../common/database/redis.hpp"
 #include "channel.h"
 #include "connection.h"
 #include "etcd.h"
 #include "log.hpp"
-#include "redis.hpp"
 
 #include "friend.pb.h"
 #include "gateway.pb.h"

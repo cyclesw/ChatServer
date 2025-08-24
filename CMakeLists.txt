@@ -27,6 +27,7 @@ include(cmake/CMakeLists.txt)
 
 find_package(PkgConfig REQUIRED)
 find_package(Boost REQUIRED COMPONENTS random)
+find_package(OpenSSL REQUIRED)
 find_package(websocketpp REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(Protobuf CONFIG REQUIRED)
@@ -36,6 +37,8 @@ find_package(OpenSSL REQUIRED)
 find_package(leveldb REQUIRED)
 find_package(httplib REQUIRED)
 find_package(etcd-cpp-api REQUIRED)
+find_package(GTest REQUIRED)
+find_package(amqpcpp REQUIRED)
 find_package(jsoncpp)
 if (NOT jsoncpp_FOUND)
     pkg_check_modules(JSONCPP REQUIRED IMPORTED_TARGET jsoncpp)
@@ -54,7 +57,8 @@ set(ABSL_LIBS
     absl_strings
     absl_strings_internal
     absl_log_initialize
-#    absl_log_entry
+    absl_log_entry
+    absl_status
     absl_log_flags
     absl_log_severity
     absl_log_internal_check_op
@@ -68,7 +72,7 @@ set(ABSL_LIBS
     absl_log_sink
     absl_raw_logging_internal
     absl_log_globals
-#    utf8_validity
+    utf8_validity
     absl_cord
     absl_cordz_info
     absl_cordz_handle

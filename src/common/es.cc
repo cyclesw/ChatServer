@@ -1,7 +1,10 @@
-#include "elastic.h"
 #include "icsearch.h"
+#include "elastic.h"
+
 #include "message.hxx"
-#include "user_table.hxx"
+#include "user.hxx"
+
+#include <cpr/cpr.h>
 #include <boost/date_time/posix_time/conversion.hpp>
 #include <vector>
 
@@ -255,11 +258,30 @@ ESUser::ESUser(const std::shared_ptr<elasticlient::Client>& client)
     :_es_client(client)
 {}
 
+bool ESUser::CreateIndex()
+{
+    bool ret = ESIndex(_es_client, "user")
+        .Append("user_id", "keyword", "standard", true)
+        .Append("nickname")
+        .Append("phone", "keyword", "standard", true)
+        .Append("description", "text", "standard", false)
+        .Append("avatar_id", "keyword", "standard", false)
+        .Create();
+
+    if (!ret)
+    {
+        LOG_INFO("用户信息索引创建失败!");
+        return false;
+    }
+    LOG_INFO("用户信息索引创建成功!");
+    return true;
+}
+
 bool ESUser::AppendData(const std::string& uid,
-    const std::string& phone,
-    const std::string& nickname,
-    const std::string& description,
-    const std::string& avatar_id)
+                        const std::string& phone,
+                        const std::string& nickname,
+                        const std::string& description,
+                        const std::string& avatar_id)
 {
     bool ret = ESInsert(_es_client, "user")
         .Append("user_id", uid)
@@ -268,7 +290,7 @@ bool ESUser::AppendData(const std::string& uid,
         .Append("description", description)
         .Append("avatar_id", avatar_id)
         .Insert(uid);
-    if (!ret == false)
+    if (ret == false)
     {
         LOG_ERROR("用户数据插入/更新失败!");
         return false;

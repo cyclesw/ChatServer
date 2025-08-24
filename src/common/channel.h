@@ -4,8 +4,6 @@
 
 #pragma once
 
-#include <brpc/channel.h>
-
 #include <string>
 #include <memory>
 #include <mutex>
@@ -13,6 +11,10 @@
 #include <unordered_set>
 #include <vector>
 
+namespace brpc
+{
+    class Channel;
+}
 
 namespace im
 {

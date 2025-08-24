@@ -1,5 +1,5 @@
-add_executable(odbexam test.cc)
-target_link_libraries(odbexam
+add_executable(odb_exam test.cc)
+target_link_libraries(odb_exam
         odb_person
 
         PkgConfig::ODBCPP

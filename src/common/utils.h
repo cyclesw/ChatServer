@@ -79,18 +79,18 @@ bool WriteFile(const std::string &filename, const std::string &body)
     return true;
 }
 
-// std::string vcode() {
-//     std::random_device rd;
-//     std::mt19937 generator(rd());
-//     std::uniform_int_distribution<int> distribution(0, 9);
+std::string VerifyCode() {
+    std::random_device rd;
+    std::mt19937 generator(rd());
+    std::uniform_int_distribution<int> distribution(0, 9);
 
-//     std::stringstream ss;
-//     for (int i = 0; i < 4; ++i)
-//     {
-//         ss << distribution(generator);
-//     }
-//     return ss.str();    
-// }
+    std::stringstream ss;
+    for (int i = 0; i < 4; ++i)
+    {
+        ss << distribution(generator);
+    }
+    return ss.str();
+}
 
 
 } // namespace im

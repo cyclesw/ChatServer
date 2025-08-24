@@ -9,6 +9,6 @@ foreach (FILE ${ODB_FILES})
         OUTPUT_DIR "${ODB_DIR}/${FILE_NAME}"
         DATABASE mysql
         STD 17
-        PROFILE boost/date-time
+#        PROFILE
     )
 endforeach ()

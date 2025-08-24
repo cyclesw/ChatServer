@@ -9,7 +9,7 @@ namespace im
 class ODBFactory
 {
 public:
-    static std::shared_ptr<odb::core::database> create(
+    static std::shared_ptr<odb::core::database> Create(
         const std::string& user,
         const std::string& password,
         const std::string& host,
