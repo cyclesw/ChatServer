@@ -39,6 +39,7 @@ target_link_libraries(user_server PUBLIC
 
         spdlog::spdlog
         leveldb::leveldb
+        cpr::cpr
 
         JsonCpp::JsonCpp
 

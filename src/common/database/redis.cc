@@ -1,4 +1,4 @@
-#include "redis.hpp"
+#include "redis.h"
 #include <sw/redis++/redis.h>
 
 std::shared_ptr<sw::redis::Redis> im::RedisClientFactory::Create(const std::string &host, const int port, int db,

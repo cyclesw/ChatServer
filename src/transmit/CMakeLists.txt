@@ -1,6 +1,8 @@
 add_executable(transmit_server
+        ./server.cc
         transmit_server.cc
         ../common/database/mysql_chat_session_member.cc
+        ../common/database/mysql_chat_session.cc
         ../common/rabbitmq.cc
 )
 

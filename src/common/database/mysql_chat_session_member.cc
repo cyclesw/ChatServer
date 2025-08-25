@@ -5,6 +5,8 @@
 
 #include "log.hpp"
 
+#include <odb/database.hxx>
+
 
 
 im::ChatSessionMemberTable::ChatSessionMemberTable(const std::shared_ptr<odb::core::database>& db)

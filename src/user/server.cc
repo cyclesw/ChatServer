@@ -8,7 +8,7 @@
 #include <brpc/server.h>
 #include <brpc/channel.h>
 
-#include "../common/database/redis.hpp"
+#include "database/redis.h"
 
 // TODO: 缺失了异常处理，待完善 (after code function complete)
 

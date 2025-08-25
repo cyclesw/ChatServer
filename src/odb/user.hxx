@@ -6,7 +6,7 @@
 #define CHATSERVER_USER_HXX
 
 #include <odb/nullable.hxx>
-#include <odb/core.hxx>
+#include <odb/forward.hxx>
 #include <string>
 
 namespace im

@@ -75,5 +75,9 @@ namespace im::logger
 
 } // namespace im::logger
 
+namespace im 
+{
+    using namespace logger;
+}
 
 #endif // LOG_HPP

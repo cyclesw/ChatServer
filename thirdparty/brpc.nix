@@ -14,13 +14,13 @@
 
 stdenv.mkDerivation rec{
   pname = "brpc";
-  version = "1.13.0";
+  version = "1.14.1";
 
   src = fetchFromGitHub ({
     owner = "apache";
     repo = "brpc";
     rev = version;
-    sha256 = "sha256-BKT3oaFR3fAet96w1b+fAsS48M5DcmPdFdYeTWMZPLY=";
+    sha256 = "sha256-xOsc9T5eXa+tQFnGBr1W/XlancJMO0uND/1l2yqGRVw=";
   });
 
   outputs = [

@@ -1,5 +1,5 @@
 #pragma once
-#include <odb/core.hxx>
+#include <odb/forward.hxx>
 #include <string>
 
 namespace im

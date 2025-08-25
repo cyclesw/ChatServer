@@ -1,7 +1,7 @@
 #pragma once
 #include "chat_session_member.hxx"
-#include "log.hpp"
-#include "mysql.hpp"
+#include <memory>
+#include <vector>
 
 namespace im
 {

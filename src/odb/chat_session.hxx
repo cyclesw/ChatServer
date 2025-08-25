@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <odb/core.hxx>
+#include <odb/forward.hxx>
 #include "chat_session_member.hxx"
 
 namespace im {

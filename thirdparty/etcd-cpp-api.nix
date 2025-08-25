@@ -12,12 +12,12 @@
 
 stdenv.mkDerivation rec{
   pname = "etcd-cpp-apiv3";
-  version = "unstable";
+  version = "master";
 
   src = fetchFromGitHub ({
     owner = "etcd-cpp-apiv3";
     repo = "etcd-cpp-apiv3";
-    rev = "master";
+    rev = version;
     sha256 = "sha256-EmHT7G44t3LT0lZRe4/ngZX79UmbXiyIiWPdeVgHILI=";
   });
 

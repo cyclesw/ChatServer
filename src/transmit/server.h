@@ -1,20 +1,24 @@
 #pragma once
 
-#include "base.pb.h"
 #include "transmit.pb.h"
+#include <odb/database.hxx>
 
 namespace im
 {
-    class ChatSessionMemberTable;
-}
-namespace im
-{
     class ServiceManager;
+    class ChatSessionMemberTable;
+    class MQClient;
 
     class TransmitServiceImpl: public im::MsgTransmitService
     {
     public:
-        TransmitServiceImpl();
+        TransmitServiceImpl(const std::string &user_service_name,
+            const std::shared_ptr<ServiceManager> &channels,
+            const std::shared_ptr<odb::core::database> &mysql_client,
+            const std::string &exchange_name,
+            const std::string &routing_key,
+            const std::shared_ptr<MQClient> &mq_client);
+            
         ~TransmitServiceImpl() override;
         void GetTransmitTarget(google::protobuf::RpcController *controller, const im::NewMessageRequest *request,
                                im::GetTransmitTargetResponse *response, google::protobuf::Closure *done) override;
@@ -26,6 +30,6 @@ namespace im
 
         std::string _exchange_name;
         std::string _routing_key;
-
+        std::shared_ptr<MQClient> _mq_client;
     };
 }

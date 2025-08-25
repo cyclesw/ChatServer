@@ -1,8 +1,8 @@
 #pragma once
 
 #include <string>
+#include <odb/forward.hxx>
 #include <odb/nullable.hxx>
-#include <odb/core.hxx>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 namespace im
