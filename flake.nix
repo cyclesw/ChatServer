@@ -14,6 +14,7 @@
     {
       # ---------- overlay：把第三方包一次性注入 nixpkgs ----------
       overlays.default    = final: prev: {
+        protobuf          = prev.protobuf_28;
         brpc              = final.callPackage ./thirdparty/brpc.nix          { };
         cpprestsdk        = final.callPackage ./thirdparty/cpprestsdk.nix    { };
         etcd-cpp-apiv3    = final.callPackage ./thirdparty/etcd-cpp-api.nix  { cpprestsdk = final.cpprestsdk; };
