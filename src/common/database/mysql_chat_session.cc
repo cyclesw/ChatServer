@@ -88,7 +88,7 @@ namespace im
         return res;
     }
     
-    std::vector<SingleChatSession> ChatSessionTable::SingleChatSession(const std::string& uid)
+    std::vector<SingleChatSession> ChatSessionTable::GetSingleChatSession(const std::string& uid)
     {
          std::vector<im::SingleChatSession> res;
         try {
@@ -111,7 +111,7 @@ namespace im
        
     }
     
-    std::vector<GroupChatSession> ChatSessionTable::GroupChatSession(const std::string &uid)
+    std::vector<GroupChatSession> ChatSessionTable::GetGroupChatSession(const std::string &uid)
     {
         std::vector<im::GroupChatSession> res;
         try {

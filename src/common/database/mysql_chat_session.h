@@ -22,9 +22,9 @@ namespace im
 
         std::shared_ptr<ChatSession> Select(const std::string& ssid);
 
-        std::vector<SingleChatSession> SingleChatSession(const std::string& uid);
+        std::vector<SingleChatSession> GetSingleChatSession(const std::string& uid);
 
-        std::vector<GroupChatSession> GroupChatSession(const std::string &uid);
+        std::vector<GroupChatSession> GetGroupChatSession(const std::string &uid);
     private:
         std::shared_ptr<odb::core::database> _db;
     };
