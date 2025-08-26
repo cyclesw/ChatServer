@@ -17,6 +17,7 @@ target_link_libraries(transmit_server
         ${ODBCPP_LIBRARIES}
         ${ODBCPP_MYSQL_LIBRARIES}
 
+        user_proto
         transmit_proto
         odb_chat_session
         odb_chat_session_member
@@ -47,4 +48,22 @@ target_link_libraries(transmit_client
         leveldb::leveldb
         amqpcpp
 )
+
+add_executable(mysql_chat_test
+        test/test.cc
+        ../common/database/mysql_chat_session_member.cc
+        ../common/database/mysql_chat_session.cc
+)
+
+target_link_libraries(mysql_chat_test
+        ${GFLAGS_LIBRARIES}
+        ${ODBCPP_LIBRARIES}
+        ${ODBCPP_MYSQL_LIBRARIES}
+
+        odb_chat_session
+        odb_chat_session_member
+
+        spdlog::spdlog
+)
+
 

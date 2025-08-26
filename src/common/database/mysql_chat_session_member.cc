@@ -75,7 +75,7 @@ bool im::ChatSessionMemberTable::Remove(const std::string &ssid)
     }
     return true;
 }
-std::vector<std::string> im::ChatSessionMemberTable::members(const std::string &ssid)
+std::vector<std::string> im::ChatSessionMemberTable::Members(const std::string &ssid)
 {
     std::vector<std::string> res;
     try

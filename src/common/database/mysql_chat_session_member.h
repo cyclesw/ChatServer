@@ -21,7 +21,7 @@ namespace im
         // 删除会话的所有成员信息
         bool Remove(const std::string &ssid);
 
-        std::vector<std::string> members(const std::string &ssid);
+        std::vector<std::string> Members(const std::string &ssid);
 
     private:
         std::shared_ptr<odb::core::database> _db;

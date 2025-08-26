@@ -1,5 +1,6 @@
 #pragma once
 
+#include "base.pb.h"
 #include "etcd.h"
 #include "rabbitmq.h"
 #include "channel.h"
@@ -7,10 +8,14 @@
 #include "database/mysql_chat_session_member.h"
 
 #include "transmit.pb.h"
+#include "user.pb.h"
 
 #include "log.hpp"
+#include "utils.h"
 
 #include <brpc/closure_guard.h>
+#include <brpc/channel.h>
+#include <brpc/controller.h>
 #include <brpc/server.h>
 #include <memory>
 
@@ -51,11 +56,54 @@ namespace im
             std::string uid = request->user_id();
             std::string chat_ssid = request->chat_session_id();
             const MessageContent &content = request->message();
+
+            LOG_TRACE("接收到消息传输请求，请求ID: {}, 用户ID: {}, 会话ID: {}", rid, uid, chat_ssid);
+
             // 进行消息组织：发送者-用户子服务获取信息，所属会话，消息内容，产生时间，消息ID
             auto channel = _channels->Choose(_user_service_name);
             if (!channel) {
                 LOG_ERROR("{}-{} 没有可供访问的用户子服务节点！", rid, _user_service_name);
                 return err_response(rid, "没有可供访问的用户子服务节点！");
+            }
+            UserService_Stub stub(channel.get());
+            GetUserInfoRequest user_request;
+            GetUserInfoResponse user_response;
+            user_request.set_request_id(rid);
+            user_request.set_user_id(uid);
+            brpc::Controller cntl;
+            stub.GetUserInfo(&cntl, &user_request, &user_response, nullptr);
+
+            if (cntl.Failed()) {
+                LOG_ERROR("{} - 获取用户信息失败: {}!", rid, cntl.ErrorText());
+                return err_response(rid, "获取用户信息失败!");
+            }
+
+            MessageInfo message;
+            message.set_message_id(Uuid());
+            message.set_chat_session_id(chat_ssid);
+            message.set_timestamp(time(nullptr));
+            message.mutable_sender()->CopyFrom(user_response.user_info());
+            message.mutable_message()->CopyFrom(content);
+
+            LOG_TRACE("消息组织完成，消息ID: {}", message.message_id());
+
+            // 获取消息妆发客户端用户列表
+            auto target_list = _mysql_session_member_table->Members(chat_ssid);
+            bool ret = _mq_client->Publish(_exchange_name, message.SerializeAsString(), _routing_key);
+            if (!ret)
+            {
+                LOG_ERROR("{} - 持久化消息发布失败: {}!", request->request_id(), cntl.ErrorText());
+                return err_response(request->request_id(), "持久化消息发布失败!");
+            }
+
+            LOG_TRACE("消息发布成功，目标会话ID: {}, 目标用户数量: {}", chat_ssid, target_list.size());
+
+            response->set_request_id(rid);
+            response->set_success(true);
+            response->mutable_message()->CopyFrom(message);
+            for (auto &target : target_list)
+            {
+                response->add_target_id_list(target);
             }
         }
     private:

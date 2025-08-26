@@ -23,7 +23,7 @@ DEFINE_string(es_host, "http://192.168.10.248:9200/", "ES搜索引擎服务器UR
 DEFINE_string(mysql_host, "127.0.0.1", "Mysql服务器访问地址");
 DEFINE_string(mysql_user, "test", "Mysql服务器访问用户名");
 DEFINE_string(mysql_pswd, "123456", "Mysql服务器访问密码");
-DEFINE_string(mysql_db, "TestDB", "Mysql默认库名称");
+DEFINE_string(mysql_db, "im", "Mysql默认库名称");
 DEFINE_string(mysql_cset, "utf8", "Mysql客户端字符集");
 DEFINE_int32(mysql_port, 0, "Mysql服务器访问端口");
 DEFINE_int32(mysql_pool_count, 4, "Mysql连接池最大连接数量");

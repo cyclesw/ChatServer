@@ -1,9 +1,9 @@
 syntax = "proto3";
 package im;
 import "base.proto";
-
 option cc_generic_services = true;
-message GetHistoryMsgRequest {
+
+message GetHistoryMessageRequest {
     string request_id = 1;
     string chat_session_id = 2;
     int64 start_time = 3;
@@ -11,14 +11,14 @@ message GetHistoryMsgRequest {
     optional string user_id = 5;
     optional string session_id = 6;
 }
-message GetHistoryMsgResponse {
+message GetHistoryMessageResponse {
     string request_id = 1;
     bool success = 2;
-    string errmsg = 3; 
+    string error = 3; 
     repeated MessageInfo msg_list = 4;
 }
 
-message GetRecentMsgRequest {
+message GetRecentMessageRequest {
     string request_id = 1;
     string chat_session_id = 2;
     int64 msg_count = 3;
@@ -26,29 +26,28 @@ message GetRecentMsgRequest {
     optional string user_id = 5;
     optional string session_id = 6;
 }
-message GetRecentMsgResponse {
+message GetRecentMessageResponse {
     string request_id = 1;
     bool success = 2;
-    string errmsg = 3; 
+    string error = 3; 
     repeated MessageInfo msg_list = 4;
 }
-
-message MsgSearchRequest {
+message MessageSearchRequest {
     string request_id = 1;
     optional string user_id = 2;
     optional string session_id = 3;
     string chat_session_id = 4;
     string search_key = 5;
 }
-message MsgSearchResponse {
+message MessageSearchResponse {
     string request_id = 1;
     bool success = 2;
-    string errmsg = 3; 
+    string error = 3; 
     repeated MessageInfo msg_list = 4;
 }
 
-service MsgStorageService {
-    rpc GetHistoryMsg(GetHistoryMsgRequest) returns (GetHistoryMsgResponse);
-    rpc GetRecentMsg(GetRecentMsgRequest) returns (GetRecentMsgResponse);
-    rpc MsgSearch(MsgSearchRequest) returns (MsgSearchResponse);
+service MessageStorageService {
+    rpc GetHistoryMessage(GetHistoryMessageRequest) returns (GetHistoryMessageResponse);
+    rpc GetRecentMessage(GetRecentMessageRequest) returns (GetRecentMessageResponse);
+    rpc MessageSearch(MessageSearchRequest) returns (MessageSearchResponse);
 }
