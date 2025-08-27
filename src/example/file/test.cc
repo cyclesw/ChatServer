@@ -1,14 +1,16 @@
-#include <brpc/controller.h>
-#include <gflags/gflags.h>
-#include <gtest/gtest.h>
-#include <thread>
-
 #include "base.pb.h"
 #include "etcd.h"
 #include "file.pb.h"
 #include "channel.h"
 #include "log.hpp"
 #include "utils.h"
+
+#include <brpc/channel.h>
+#include <brpc/controller.h>
+#include <gflags/gflags.h>
+#include <gtest/gtest.h>
+#include <thread>
+
 
 
 DEFINE_bool(run_mode, false, "程序的运行模式, false-调试； true-发布；");

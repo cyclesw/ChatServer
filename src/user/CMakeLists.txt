@@ -10,9 +10,11 @@ add_executable(user_server
 )
 add_executable(user_test_1
         test/mysql_test.cc
+        ../common/database/user_table.cc
 )
 add_executable(redis_test_1
        test/redis_test.cc
+       ../common/database/redis.cc
 )
 add_executable(user_client
         test/user_client.cc

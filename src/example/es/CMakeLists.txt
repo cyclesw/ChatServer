@@ -8,6 +8,7 @@ target_link_libraries(es_exam
 
         elasticlient
         JsonCpp::JsonCpp
+        cpr::cpr
 
         spdlog::spdlog
 )

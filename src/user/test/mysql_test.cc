@@ -3,6 +3,7 @@
 #include "../../common/database/user_table.hpp"
 #include "user-odb.hxx"
 #include "user.hxx"
+#include "log.hpp"
 
 DEFINE_bool(run_mode, false, "程序的运行模式，false-调试； true-发布；");
 DEFINE_string(log_file, "", "发布模式下，用于指定日志的输出文件");

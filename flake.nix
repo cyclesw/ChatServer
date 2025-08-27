@@ -34,7 +34,7 @@
           } {
             packages = with pkgs; [
               # 编译&调试
-              clang-tools pkg-config cmake gcc
+              pkg-config cmake gcc
               # 运行时 / 第三方库
               brpc cpprestsdk etcd-cpp-apiv3
               libodb libodb-mysql libodb-boost odb

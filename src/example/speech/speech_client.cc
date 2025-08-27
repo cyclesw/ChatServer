@@ -12,6 +12,7 @@
 #include <memory>
 #include <string>
 #include <thread>
+#include <brpc/channel.h>
 
 
 DEFINE_bool(run_mode, false, "程序的运行模式，false-调试； true-发布；");
