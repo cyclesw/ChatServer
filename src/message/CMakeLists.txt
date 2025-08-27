@@ -35,6 +35,7 @@ add_executable(message_client
     test/test.cc
     ../common/etcd.cc
     ../common/channel.cc
+    ../common/es.cc
     ../common/database/mysql_message.cc
 )
 

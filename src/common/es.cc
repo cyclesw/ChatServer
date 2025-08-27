@@ -1,6 +1,7 @@
 #include "icsearch.h"
 #include "elastic.h"
 
+#include "log.hpp"
 #include "message.hxx"
 #include "user.hxx"
 
@@ -340,7 +341,7 @@ bool ESMessage::CreateIndex()
     .Append("content")
     .Create();
     if (ret == false) {
-        LOG_INFO("消息信息索引创建失败!");
+        LOG_ERROR("消息信息索引创建失败!");
         return false;
     }
     LOG_INFO("消息信息索引创建成功!");

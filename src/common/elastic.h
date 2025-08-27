@@ -53,6 +53,13 @@ public:
         const std::string& chat_session_id,
         const std::string& content);
 
+    /**
+     * @brief 删除消息
+     * 
+     * @param mid 消息ID
+     * @return true 删除成功
+     * @return false 删除失败
+     */
     bool Remove(const std::string& mid);
 
     std::vector<im::Message> Search(const std::string& key, const std::string& ssid);

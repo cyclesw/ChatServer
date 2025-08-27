@@ -8,6 +8,7 @@
 #include "user.pb.h"
 
 #include <brpc/channel.h>
+#include <brpc/closure_guard.h>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -47,6 +48,7 @@ namespace im
         std::string chat_ssid = request->chat_session_id();
         boost::posix_time::ptime stime = boost::posix_time::from_time_t(request->start_time());
         boost::posix_time::ptime etime = boost::posix_time::from_time_t(request->over_time());
+        LOG_TRACE("{} 开始获取历史消息，会话ID：{}，起始时间：{}，结束时间：{}", rid, chat_ssid, boost::posix_time::to_time_t(stime), boost::posix_time::to_time_t(etime));
 
         // 2. 从数据库中进行信息查询
         auto msg_lists = _mysql_message->Range(chat_ssid, stime, etime);
@@ -74,7 +76,7 @@ namespace im
             return err_response(rid, "批量文件数据下载失败!");
         }
         // 4. 统计所有消息的发送者用户ID，从用户子服务进行批量用户信息获取
-        std::unordered_set<std::string> user_id_lists; // {猪爸爸吧， 祝妈妈，猪爸爸吧，祝爸爸}
+        std::unordered_set<std::string> user_id_lists; 
         for (const auto &msg: msg_lists)
         {
             user_id_lists.insert(msg.user_id());
@@ -134,6 +136,8 @@ namespace im
                                               ::im::GetRecentMessageResponse *response,
                                               ::google::protobuf::Closure *done)
     {
+        brpc::ClosureGuard rpc_guard(done);
+
         LOG_DEBUG("开始获取最近消息");
         auto err_response = [this, response](const std::string &rid, const std::string &errmsg) -> void
         {
@@ -231,6 +235,7 @@ namespace im
                                            const ::im::MessageSearchRequest *request,
                                            ::im::MessageSearchResponse *response, ::google::protobuf::Closure *done)
     {
+        brpc::ClosureGuard rpc_guard(done);
         LOG_DEBUG("开始搜索消息");
         auto err_response = [this, response](const std::string &rid, const std::string &errmsg) -> void
         {
@@ -387,7 +392,7 @@ namespace im
         stub.GetMultiUserInfo(&cntl, &req, &rsp, nullptr);
         if (cntl.Failed() == true || rsp.success() == false)
         {
-            LOG_ERROR("用户子服务调用失败：{}！", cntl.ErrorText());
+            LOG_ERROR("用户子服务调用失败: {}{}!", cntl.ErrorText(), rsp.error());
             return false;
         }
         const auto &umap = rsp.users_info();

@@ -412,6 +412,12 @@ void UserServiceImpl::GetMultiUserInfo(google::protobuf::RpcController *controll
     }
     //3. 从数据库进行批量用户信息查询
     auto users = _mysql_user->SelectMultiUsers(uid_lists);
+#ifdef _DEBUG
+    for (auto &user: users)
+    {
+        LOG_TRACE("{} - 从数据库查找的用户信息 - {}！", request->request_id(), user.user_id());
+    }
+#endif
     if (users.size() != request->users_id_size())
     {
         LOG_ERROR("{} - 从数据库查找的用户信息数量不一致 {}-{}！",

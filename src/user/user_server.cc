@@ -1,3 +1,5 @@
+#define _DEBUG 1
+
 #include "server.h"
 
 #include <gflags/gflags.h>
