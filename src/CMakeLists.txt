@@ -4,6 +4,7 @@ add_subdirectory(user)
 add_subdirectory(file)
 add_subdirectory(transmit)
 add_subdirectory(message)
+add_subdirectory(friend)
 
 # if ()
 add_subdirectory(example)

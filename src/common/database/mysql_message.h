@@ -1,3 +1,4 @@
+#pragma once
 #include <memory>
 #include <odb/forward.hxx>
 #include <string>

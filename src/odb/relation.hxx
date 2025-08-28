@@ -1,28 +1,20 @@
 #pragma once
-#include <odb/forward.hxx>
+#include <cstddef>
+#include <odb/core.hxx>
+#include <odb/nullable.hxx>
 #include <string>
 
 namespace im
 {
-#pragma db object table("friend_apply")
-    class FriendApply
+#pragma db object table("relation")
+    class Relation
     {
     public:
-        FriendApply()
+        Relation()
         {
         }
-        FriendApply(const std::string &eid, const std::string &uid, const std::string &pid) :
-            _user_id(uid), _peer_id(pid), _event_id(eid)
+        Relation(const std::string &uid, const std::string &pid) : _user_id(uid), _peer_id(pid)
         {
-        }
-
-        std::string event_id() const
-        {
-            return _event_id;
-        }
-        void event_id(std::string &eid)
-        {
-            _event_id = eid;
         }
 
         std::string user_id() const
@@ -47,11 +39,10 @@ namespace im
         friend class odb::access;
 #pragma db id auto
         unsigned long _id;
-#pragma db type("varchar(64)") index unique
-        std::string _event_id;
 #pragma db type("varchar(64)") index
         std::string _user_id;
-#pragma db type("varchar(64)") index
+#pragma db type("varchar(64)")
         std::string _peer_id;
     };
-} // namespace bite_im
+    // odb -d mysql --std c++11 --generate-query --generate-schema --profile boost/date-time person.hxx
+} // namespace im
