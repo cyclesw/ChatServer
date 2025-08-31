@@ -12,6 +12,7 @@
 namespace im
 {
     ChatSessionTable::ChatSessionTable(const std::shared_ptr<odb::core::database>& db)
+        :_db(db)
     {
         
     }
@@ -28,7 +29,20 @@ namespace im
         }
         return true;
     }
-    
+
+    bool ChatSessionTable::Insert(ChatSession &&cs)
+    {
+        try {
+            odb::transaction trans(_db->begin());
+            _db->persist(cs);
+            trans.commit();
+        }catch (std::exception &e) {
+            LOG_ERROR("新增会话失败 {}:{}！", cs.chat_session_name(), e.what());
+            return false;
+        }
+        return true;
+    }
+
     bool ChatSessionTable::Remove(const std::string& ssid)
     {
         try {

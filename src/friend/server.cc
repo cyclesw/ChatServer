@@ -127,14 +127,14 @@ namespace im
         bool ret = _mysql_relation->Exists(uid, pid);
         if (ret == true)
         {
-            LOG_ERROR("{}- 申请好友失败-两者{}-{}已经是好友关系", rid, uid, pid);
+            LOG_WARN("{}- 申请好友失败-两者{}-{}已经是好友关系", rid, uid, pid);
             return err_response(rid, "两者已经是好友关系！");
         }
         // 3. 当前是否已经申请过好友
         ret = _mysql_apply->Exists(uid, pid);
         if (ret == true)
         {
-            LOG_ERROR("{}- 申请好友失败-已经申请过对方好友！", rid, uid, pid);
+            LOG_WARN("{}- 申请好友失败-已经申请过对方好友！", rid, uid, pid);
             return err_response(rid, "已经申请过对方好友！");
         }
         // 4. 向好友申请表中，新增申请信息

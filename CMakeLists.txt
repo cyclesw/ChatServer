@@ -6,12 +6,20 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_SUPPRESS_DEVELOPER_WARNINGS 1)
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+
 set(PROTO_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated" CACHE STRING "Directory for generated protobuf files")
-set(ODB_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated_odb")
+set(ODB_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated_odb" CACHE STRING "Directory for generated odb files")
+set(BUILD_TEST ON CACHE BOOL "Build Unit testing and client test")
+set(BUILD_EXAMPLE OFF CACHE BOOL "Build 3rd party usage example")
+
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/common)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/odb)
+
+
 
 add_definitions(-DASIO_STANDALONE)
 
@@ -45,6 +53,8 @@ if (NOT jsoncpp_FOUND)
     pkg_check_modules(JSONCPP REQUIRED IMPORTED_TARGET jsoncpp)
     add_library(JsonCpp::JsonCpp ALIAS PkgConfig::JSONCPP)
 endif()
+
+
 
 
 pkg_check_modules(REDISPP REQUIRED IMPORTED_TARGET redis++)
@@ -109,6 +119,10 @@ set(ABSL_LIBS
 
 
 message(STATUS "---------------------------------------------------------------------")
+if (BUILD_TEST)
+    message(STATUS "Build Gtest Uint Testing")
+    find_package(GTest REQUIRED)
+endif ()
 
 add_subdirectory(proto)
 add_subdirectory(src)

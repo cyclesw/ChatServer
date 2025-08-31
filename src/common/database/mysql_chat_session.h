@@ -15,6 +15,7 @@ namespace im
         ChatSessionTable(const std::shared_ptr<odb::core::database>& db);
 
         bool Insert(ChatSession &cs);
+        bool Insert(ChatSession &&cs);
 
         bool Remove(const std::string& ssid);
 

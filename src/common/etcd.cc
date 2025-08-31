@@ -32,6 +32,7 @@ bool Register::Registry(const std::string &key, const std::string &value)
         LOG_ERROR("注册服务失败: {}-{}", key, value);
         return false;
     }
+    LOG_DEBUG("注册服务: {}-{}", key, value);
     return true;
 }
 
@@ -40,6 +41,7 @@ Discovery::Discovery(const std::string& host, const std::string& basedir, Notify
     , _delete_callback(std::move(del_callback))
     , _client(std::make_shared<etcd::Client>(host))
 {
+    LOG_DEBUG("开始查询服务信息!");
     auto resp = _client->ls(basedir).get();
     if (resp.is_ok() == false)
     {

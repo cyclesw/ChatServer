@@ -6,5 +6,6 @@ add_subdirectory(transmit)
 add_subdirectory(message)
 add_subdirectory(friend)
 
-# if ()
-add_subdirectory(example)
+if (BUILD_EXAMPLE)
+    add_subdirectory(example)
+endif ()
