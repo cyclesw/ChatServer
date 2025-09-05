@@ -29,6 +29,6 @@ message GetTransmitTargetResponse {
   repeated string target_id_list = 5; //消息的转发目标列表
 }
 
-service MsgTransmitService {
+service MessageTransmitService {
   rpc GetTransmitTarget(NewMessageRequest) returns (GetTransmitTargetResponse);
 }

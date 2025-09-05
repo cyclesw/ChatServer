@@ -5,6 +5,7 @@ add_subdirectory(file)
 add_subdirectory(transmit)
 add_subdirectory(message)
 add_subdirectory(friend)
+add_subdirectory(gateway)
 
 if (BUILD_EXAMPLE)
     add_subdirectory(example)

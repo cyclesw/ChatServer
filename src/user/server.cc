@@ -221,7 +221,7 @@ void UserServiceImpl::PhoneRegister(google::protobuf::RpcController *controller,
     {
         response->set_request_id(rid);
         response->set_success(false);
-        response->set_errmsg(errmsg);
+        response->set_error(errmsg);
         return;
     };
     // 1. 从请求中取出手机号码和验证码,验证码ID
@@ -283,7 +283,7 @@ void UserServiceImpl::PhoneLogin(google::protobuf::RpcController *controller, co
     {
         response->set_request_id(rid);
         response->set_success(false);
-        response->set_errmsg(errmsg);
+        response->set_error(errmsg);
         return;
     };
     // 1. 从请求中取出手机号码和验证码 ID，以及验证码。

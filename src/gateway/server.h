@@ -62,8 +62,12 @@ class Session;
 class Discovery;
 class ServiceManager;
 class Connection;
+class GatewayServer;
 
 using server_t = websocketpp::server<websocketpp::config::asio>;
+
+using GatewayServerPtr = std::shared_ptr<GatewayServer>;
+
 
 class GatewayServer
 {
@@ -73,6 +77,8 @@ class GatewayServer
                   const std::string &user_service_name, const std::string &file_service_name,
                   const std::string &speech_service_name, const std::string &message_service_name,
                   const std::string &transmite_service_name, const std::string &friend_service_name);
+
+    void Start();
 
   private:
     void OnOpen(websocketpp::connection_hdl hdl);

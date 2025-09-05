@@ -30,8 +30,6 @@ int main(int argc, char* argv[])
 {
     using namespace im;
     using namespace im::logger;
-    typedef int connection_hdl;
-    typedef int connection_hdl;
 
     google::ParseCommandLineFlags(&argc, &argv, true);
 
@@ -51,13 +49,9 @@ int main(int argc, char* argv[])
         FLAGS_friend_service,
         FLAGS_user_service,
         FLAGS_transmite_service);
+    builder.MakeServerObject(FLAGS_websocket_port, FLAGS_http_port);
 
-
-    LOG_TRACE("Trace");
-    LOG_DEBUG("Debug");
-    LOG_INFO("Info");
-    LOG_WARN("Warn");
-    LOG_ERROR("Error");
-    LOG_CRITICAL("Critical");
+    auto server = builder.Build();
+    server->Start();
     return 0;
 }

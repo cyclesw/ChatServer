@@ -22,7 +22,7 @@
 namespace im
 {
 
-    class TransmitServiceImpl: public im::MsgTransmitService
+    class TransmitServiceImpl: public im::MessageTransmitService
     {
     public:
         TransmitServiceImpl(const std::string &user_service_name,

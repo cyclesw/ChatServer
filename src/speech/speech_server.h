@@ -43,7 +43,7 @@ class SpeechServiceImpl : public im::SpeechService
         {
             LOG_ERROR("{} 语音识别失败", request->request_id());
             response->set_success(false);
-            response->set_errmsg(message);
+            response->set_error(message);
             return;
         }
 

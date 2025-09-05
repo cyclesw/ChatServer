@@ -38,7 +38,7 @@ namespace im
         {
             response->set_request_id(rid);
             response->set_success(false);
-            response->set_errmsg(errmsg);
+            response->set_error(errmsg);
             return;
         };
 
@@ -80,7 +80,7 @@ namespace im
         {
             response->set_request_id(rid);
             response->set_success(false);
-            response->set_errmsg(errmsg);
+            response->set_error(errmsg);
             return;
         };
         // 1. 提取关键要素：当前用户ID，要删除的好友ID
@@ -116,7 +116,7 @@ namespace im
         {
             response->set_request_id(rid);
             response->set_success(false);
-            response->set_errmsg(errmsg);
+            response->set_error(errmsg);
             return;
         };
         // 1. 提取请求中的关键要素：申请人用户ID； 被申请人用户ID
@@ -163,7 +163,7 @@ namespace im
         {
             response->set_request_id(rid);
             response->set_success(false);
-            response->set_errmsg(errmsg);
+            response->set_error(errmsg);
             return;
         };
         // 1. 提取请求中的关键要素：申请人用户ID；被申请人用户ID；处理结果；事件ID
@@ -230,7 +230,7 @@ namespace im
         {
             response->set_request_id(rid);
             response->set_success(false);
-            response->set_errmsg(errmsg);
+            response->set_error(errmsg);
             return;
         };
         // 1. 提取请求中的关键要素：搜索关键字（可能是用户ID，可能是手机号，可能是昵称的一部分）
@@ -277,7 +277,7 @@ namespace im
         {
             response->set_request_id(rid);
             response->set_success(false);
-            response->set_errmsg(errmsg);
+            response->set_error(errmsg);
             return;
         };
         // 1. 提取关键要素：当前用户ID
@@ -319,7 +319,7 @@ namespace im
         {
             response->set_request_id(rid);
             response->set_success(false);
-            response->set_errmsg(errmsg);
+            response->set_error(errmsg);
             return;
         };
         // 获取聊天会话的作用：一个用户登录成功后，能够展示自己的历史聊天信息
@@ -390,7 +390,7 @@ namespace im
         {
             response->set_request_id(rid);
             response->set_success(false);
-            response->set_errmsg(errmsg);
+            response->set_error(errmsg);
             return;
         };
         // 创建会话，其实针对的是用户要创建一个群聊会话
@@ -438,7 +438,7 @@ namespace im
         {
             response->set_request_id(rid);
             response->set_success(false);
-            response->set_errmsg(errmsg);
+            response->set_error(errmsg);
             return;
         };
         // 用于用户查看群聊成员信息的时候：进行成员信息展示

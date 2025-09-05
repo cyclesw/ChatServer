@@ -13,7 +13,7 @@ message GetFriendListRequest {
 message GetFriendListResponse {
     string request_id = 1;
     bool success = 2;
-    string errmsg = 3; 
+    string error = 3;
     repeated UserInfo friend_list = 4; //要返回的用户信息
 }
 
@@ -28,7 +28,7 @@ message FriendRemoveRequest {
 message FriendRemoveResponse {
     string request_id = 1;
     bool success = 2;
-    string errmsg = 3; 
+    string error = 3;
 }
 //--------------------------------------
 //添加好友--发送好友申请
@@ -41,7 +41,7 @@ message FriendAddRequest {
 message FriendAddResponse {
     string request_id = 1;
     bool success = 2;
-    string errmsg = 3; 
+    string error = 3;
     string notify_event_id = 4;//通知事件id
 }
 //--------------------------------------
@@ -58,7 +58,7 @@ message FriendAddProcessRequest {
 message FriendAddProcessResponse {
     string request_id = 1;
     bool success = 2;
-    string errmsg = 3; 
+    string error = 3;
     // 同意后会创建会话，向网关返回会话信息，用于通知双方会话的建立，这个字段客户端不需要关注
     optional string new_session_id = 4; 
 }
@@ -77,7 +77,7 @@ message FriendEvent {
 message GetPendingFriendEventListResponse {
     string request_id = 1;
     bool success = 2;
-    string errmsg = 3; 
+    string error = 3;
     repeated FriendEvent event = 4;
 }
 
@@ -92,7 +92,7 @@ message FriendSearchRequest {
 message FriendSearchResponse {
     string request_id = 1;
     bool success = 2;
-    string errmsg = 3; 
+    string error = 3;
     repeated UserInfo user_info = 4;
 }
 
@@ -106,7 +106,7 @@ message GetChatSessionListRequest {
 message GetChatSessionListResponse {
     string request_id = 1;
     bool success = 2;
-    string errmsg = 3; 
+    string error = 3;
     repeated ChatSessionInfo chat_session_info_list = 4;
 }
 //--------------------------------------
@@ -122,7 +122,7 @@ message ChatSessionCreateRequest {
 message ChatSessionCreateResponse {
     string request_id = 1;
     bool success = 2;
-    string errmsg = 3; 
+    string error = 3;
     //这个字段属于后台之间的数据，给前端回复的时候不需要这个字段，会话信息通过通知进行发送
     optional ChatSessionInfo chat_session_info = 4; 
 }
@@ -137,7 +137,7 @@ message GetChatSessionMemberRequest {
 message GetChatSessionMemberResponse {
     string request_id = 1;
     bool success = 2;
-    string errmsg = 3; 
+    string error = 3;
     repeated UserInfo member_info_list = 4;
 }
 

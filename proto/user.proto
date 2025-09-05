@@ -58,7 +58,7 @@ message PhoneRegisterRequest {
 message PhoneRegisterResponse {
   string request_id = 1;
   bool success = 2;
-  string errmsg = 3;
+  string error = 3;
 }
 
 //手机号登录
@@ -71,7 +71,7 @@ message PhoneLoginRequest {
 
 message PhoneLoginResponse {
   string request_id = 1;
-  string errmsg = 2;
+  string error = 2;
   string login_session_id = 3;
   bool success = 4;
 }
