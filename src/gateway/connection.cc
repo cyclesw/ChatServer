@@ -31,7 +31,7 @@ bool Connection::GetClient(const server_t::connection_ptr& conn, std::string& ui
         return true;
     }
 
-    LOG_ERROR("...Connection::GetClient: conn not found");
+    LOG_ERROR("...Connection::GetClient: {} not found", (void*)conn.get());
     return false;
 }
 
