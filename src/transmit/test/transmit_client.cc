@@ -47,7 +47,7 @@ protected:
         auto channel = sm_->Choose(FLAGS_transmite_service);
         ASSERT_TRUE(channel) << "获取通信信道失败！";
 
-        im::MsgTransmitService_Stub stub(channel.get());
+        im::MessageTransmitService_Stub stub(channel.get());
         im::NewMessageRequest       req;
         im::GetTransmitTargetResponse rsp;
         brpc::Controller            cntl;

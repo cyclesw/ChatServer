@@ -24,9 +24,9 @@
 #include <system_error>
 #include <utility>
 
-#include "../../cmake-build-debug/generated/file/file.pb.h"
-#include "../../cmake-build-debug/generated/speech/speech.pb.h"
-#include "../../cmake-build-debug/generated/transmit/transmit.pb.h"
+#include "file.pb.h"
+#include "speech.pb.h"
+#include "transmit.pb.h"
 
 using namespace im;
 using namespace im;

@@ -10,7 +10,7 @@
 #include <gflags/gflags.h>
 #include <gtest/gtest.h>
 
-#include "../../../cmake-build-debug/generated/user/user.pb.h"
+#include "user.pb.h"
 
 DEFINE_bool(run_mode, false, "程序的运行模式，false-调试； true-发布；");
 DEFINE_string(log_file, "", "发布模式下，用于指定日志的输出文件");
