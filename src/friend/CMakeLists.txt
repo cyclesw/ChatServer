@@ -83,6 +83,7 @@ if (BUILD_TEST)
             ${BRPC_LIBRARIES}
 
             friend_proto
+            user_proto
 
             GTest::gtest
             leveldb::leveldb
