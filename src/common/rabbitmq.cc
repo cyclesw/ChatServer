@@ -21,6 +21,9 @@ MQClient::MQClient(const std::string &user, std::string password, std::string ho
     _connection = std::make_unique<AMQP::TcpConnection>(_handler.get(), address);
     _channel = std::make_unique<AMQP::TcpChannel>(_connection.get());
 
+    ev_async_init(&_async_watcher, WatcherCallback);
+    ev_async_start(_loop, &_async_watcher);
+
     _loop_thread = std::thread([this]() {
         ev_run(_loop, 0);
     });
@@ -29,8 +32,6 @@ MQClient::MQClient(const std::string &user, std::string password, std::string ho
 
 MQClient::~MQClient()
 {
-    ev_async_init(&_async_watcher, WatcherCallback);
-    ev_async_start(_loop, &_async_watcher);
     ev_async_send(_loop, &_async_watcher);
     _loop_thread.join();
     _loop = nullptr;
