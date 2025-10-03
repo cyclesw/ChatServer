@@ -71,7 +71,7 @@ int main(int argc, char** argv)
 
     if (!resp->success())
     {
-        LOG_ERROR("Speech recognition failed: {}", resp->errmsg());
+        LOG_ERROR("Speech recognition failed: {}", resp->error());
 
         return -1;
     }
