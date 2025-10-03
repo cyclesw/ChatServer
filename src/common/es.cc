@@ -234,7 +234,7 @@ Json::Value ESSearch::Search()
     //2. 发起搜索请求
     cpr::Response rsp;
     try {
-        rsp = _client->search(_name, _type, body);
+        rsp = _client->search(_name, "", body);
         if (rsp.status_code < 200 || rsp.status_code >= 300) {
             LOG_ERROR("检索数据 {} 失败，响应状态码异常: {}", body, rsp.status_code);
             return Json::Value();
