@@ -11,7 +11,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 set(PROTO_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated" CACHE STRING "Directory for generated protobuf files")
 set(ODB_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated_odb" CACHE STRING "Directory for generated odb files")
-set(BUILD_TEST ON CACHE BOOL "Build Unit testing and client test")
+set(BUILD_TEST OFF CACHE BOOL "Build Unit testing and client test")
 set(BUILD_EXAMPLE OFF CACHE BOOL "Build 3rd party usage example")
 
 
@@ -127,4 +127,3 @@ endif ()
 add_subdirectory(proto)
 add_subdirectory(src)
 
-message(STATUS "---------------------------------------------------------------------")

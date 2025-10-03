@@ -68,6 +68,7 @@ if (BUILD_TEST)
     target_link_libraries(redis_test_1
             ${GFLAGS_LIBRARIES}
             ${REDISPP_LIBRARIES}
+            spdlog::spdlog
     )
     target_link_libraries(user_client
             ${PROTOBUF_LIBRARIES}
