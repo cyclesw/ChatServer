@@ -5,8 +5,9 @@
 #include "user.hxx"
 #include "database/mysql.hpp"
 
-#include <brpc/server.h>
 #include <brpc/channel.h>
+#include <brpc/server.h>
+#include <sw/redis++/redis.h>
 
 #include "database/redis.h"
 
@@ -149,7 +150,7 @@ void UserServiceImpl::UserLogin(google::protobuf::RpcController *controller, con
     bool ret = _redis_status->Exists(user->user_id());
     if (ret == true)
     {
-        LOG_TRACE("{} - 用户已在其他地方登录 - {}！", request->request_id(), nickname);
+        LOG_TRACE("{} - 用户已在其他地方登录 - {}:{}！", request->request_id(), nickname, user->user_id());
         return err_response(request->request_id(), "用户已在其他地方登录!");
     }
     //4. 构造会话 ID，生成会话键值对，向 redis 中添加会话信息以及登录标记信息
@@ -728,6 +729,14 @@ void UserServerBuilder::MakeMysqlObject(const std::string &user, const std::stri
 void UserServerBuilder::MakeRedisObject(const std::string &host, int port, int db, bool keep_alive)
 {
     _redis_client = RedisClientFactory::Create(host, port, db, keep_alive);
+    try
+    {
+        LOG_INFO("REDIS PING: {}", _redis_client->ping());
+    } catch (std::exception ex)
+    {
+        LOG_ERROR("redis server connect error: {}", ex.what());
+        abort();
+    }
 }
 
 void UserServerBuilder::MakeDiscoveryObject(const std::string &reg_host, const std::string &base_service_name,
