@@ -17,7 +17,7 @@ server_t::connection_ptr Connection::GetConnection(const std::string& uid)
     if (it != _uid_connections.end()) {
         return it->second;
     }
-    LOG_ERROR("...Connection::GetConnection: uid not found: %s", uid.c_str());
+    LOG_TRACE("...Connection::GetConnection: uid not found: {}", uid.c_str());
     return nullptr;
 }
 
