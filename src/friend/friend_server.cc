@@ -3,7 +3,7 @@
 
 DEFINE_bool(run_mode, false, "程序的运行模式，false-调试； true-发布；");
 DEFINE_string(log_file, "", "发布模式下，用于指定日志的输出文件");
-DEFINE_string(logger_name, "file_server", "日志记录器名称");
+DEFINE_string(logger_name, "friend_server", "日志记录器名称");
 DEFINE_int32(log_level, 0, "发布模式下，用于指定日志输出等级");
 
 DEFINE_string(registry_host, "http://127.0.0.1:2379", "服务注册中心地址");
@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
     LogSetting setting;
     setting.level = (Level)FLAGS_log_level;
     setting.logger_name = FLAGS_logger_name;
+    setting.logger_type = FLAGS_run_mode ? LogType::File : LogType::Console;
 
     im::InitLogger(setting);
 
