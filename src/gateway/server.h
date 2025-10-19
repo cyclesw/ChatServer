@@ -24,8 +24,10 @@
 #define FRIEND_REMOVE "/service/friend/remove_friend"
 #define FRIEND_SEARCH "/service/friend/search_friend"
 #define FRIEND_GET_PENDING_EV "/service/friend/get_pending_friend_events"
+#define FRIEND_CHANGE_GROUP_NAME "/service/friend/change_group_name"
 #define CSS_GET_LIST "/service/friend/get_chat_session_list"
 #define CSS_CREATE "/service/friend/create_chat_session"
+#define CSS_EXIT "/service/friend/exit_group"
 #define CSS_GET_MEMBER "/service/friend/get_chat_session_member"
 #define MSG_GET_RANGE "/service/message_storage/get_history"
 #define MSG_GET_RECENT "/service/message_storage/get_recent"
@@ -103,6 +105,8 @@ class GatewayServer
     void FriendAddProcess(const httplib::Request &request, httplib::Response &response);
     void FriendRemove(const httplib::Request &request, httplib::Response &response);
     void FriendSearch(const httplib::Request &request, httplib::Response &response);
+    void ChangeGroupName(const httplib::Request &request, httplib::Response &response);
+    void ExitGroup(const httplib::Request &request, httplib::Response &response);
 
     void GetFriendList(const httplib::Request &request, httplib::Response &response);
     void GetPendingFriendEventList(const httplib::Request &request, httplib::Response &response);

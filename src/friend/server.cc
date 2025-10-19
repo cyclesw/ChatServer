@@ -470,6 +470,75 @@ namespace im
             user_info->CopyFrom(uit.second);
         }
     }
+    void FriendServiceImpl::SetChatSessionName(google::protobuf::RpcController *controller,
+                                               const im::SetChatSessionNameRequest *request,
+                                               im::SetChatSessionNameResponse *response,
+                                               google::protobuf::Closure *done)
+    {
+        brpc::ClosureGuard rpc_guard(done);
+        // 1. 定义错误回调
+        auto err_response = [this, response](const std::string &rid, const std::string &errmsg) -> void
+        {
+            response->set_request_id(rid);
+            response->set_success(false);
+            response->set_error(errmsg);
+            return;
+        };
+        std::string rid = request->request_id();
+        std::string ssid = request->session_id();
+        std::string csid = request->chat_session_id();
+        std::string cssname = request->chat_session_name();
+
+        auto chatSession = _mysql_chat_session->Select(csid);
+        if (chatSession == nullptr || chatSession->chat_session_type() != ChatSessionType::GROUP)
+        {
+            LOG_ERROR("{} - 获取会话信息失败！", rid);
+            return err_response(rid, "获取会话信息失败!");
+        }
+
+        chatSession->chat_session_name(cssname);
+        bool ret = _mysql_chat_session->Update(chatSession);
+        if (ret == false)
+        {
+            LOG_ERROR("{} - 更新会话信息失败！", rid);
+            return err_response(rid, "更新会话信息失败!");
+        }
+
+        response->set_request_id(rid);
+        response->set_success(true);
+    }
+    void FriendServiceImpl::ChatSessionQuit(google::protobuf::RpcController *controller,
+                                            const im::ChatSessionQuitRequest *request,
+                                            im::ChatSessionQuitResponse *response, google::protobuf::Closure *done)
+    {
+        brpc::ClosureGuard rpc_guard(done);
+        // 1. 定义错误回调
+        auto err_response = [this, response](const std::string &rid, const std::string &errmsg) -> void
+        {
+            response->set_request_id(rid);
+            response->set_success(false);
+            response->set_error(errmsg);
+            return;
+        };
+        std::string rid = request->request_id();
+        std::string ssid = request->session_id();
+        std::string csid = request->chat_session_id();
+        std::string uid = request->user_id();
+
+        ChatSessionMember member;
+        member.session_id(ssid);
+        member.user_id(uid);
+
+        bool ret = _mysql_chat_session_member->Remove(member);
+        if (ret == false)
+        {
+            LOG_ERROR("退出群聊失败");
+            return err_response(rid, "退出群聊失败!");
+        }
+
+        response->set_request_id(rid);
+        response->set_success(true);
+    }
 
     bool FriendServiceImpl::GetRecentMessage(const std::string &rid, const std::string &cssid, MessageInfo &msg)
     {

@@ -127,6 +127,35 @@ message ChatSessionCreateResponse {
     optional ChatSessionInfo chat_session_info = 4; 
 }
 //--------------------------------------
+//退出群聊
+message ChatSessionQuitRequest {
+    string request_id = 1;
+    string session_id = 2;
+    string chat_session_id = 3;
+    string user_id = 4;
+}
+message ChatSessionQuitResponse {
+    string request_id = 1;
+    bool success = 2;
+    string error = 3;
+}
+//--------------------------------------
+//改变聊天会话名称
+message SetChatSessionNameRequest {
+    string request_id = 1;
+    string session_id = 2;
+    string chat_session_id = 3;
+    string user_id = 4;
+    string chat_session_name = 5;
+}
+
+message SetChatSessionNameResponse {
+    string request_id = 1;
+    bool success = 2;
+    string error = 3;
+}
+
+//--------------------------------------
 //获取会话成员列表
 message GetChatSessionMemberRequest {
     string request_id = 1;
@@ -134,7 +163,7 @@ message GetChatSessionMemberRequest {
     optional string user_id = 3;
     string chat_session_id = 4;
 }
-message GetChatSessionMemberResponse {
+message GetChatSessionMemberResponse {  //TODO 群聊名称
     string request_id = 1;
     bool success = 2;
     string error = 3;
@@ -151,4 +180,6 @@ service FriendService {
     rpc ChatSessionCreate(ChatSessionCreateRequest) returns (ChatSessionCreateResponse);
     rpc GetChatSessionMember(GetChatSessionMemberRequest) returns (GetChatSessionMemberResponse);
     rpc GetPendingFriendEventList(GetPendingFriendEventListRequest) returns (GetPendingFriendEventListResponse);
+    rpc SetChatSessionName(SetChatSessionNameRequest) returns (SetChatSessionNameResponse);
+    rpc ChatSessionQuit(ChatSessionQuitRequest) returns (ChatSessionQuitResponse);
 }

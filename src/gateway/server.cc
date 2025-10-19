@@ -155,6 +155,12 @@ GatewayServer::GatewayServer(int websocket_port, int http_port, const std::share
     _http_server->Post(FRIEND_GET_PENDING_EV,
                        (httplib::Server::Handler) std::bind(&GatewayServer::GetPendingFriendEventList, this,
                                                             std::placeholders::_1, std::placeholders::_2));
+    _http_server->Post(FRIEND_CHANGE_GROUP_NAME,
+                       (httplib::Server::Handler) std::bind(&GatewayServer::ChangeGroupName, this, std::placeholders::_1,
+                           std::placeholders::_2));
+    _http_server->Post(CSS_EXIT,
+                       (httplib::Server::Handler) std::bind(&GatewayServer::ExitGroup, this, std::placeholders::_1,
+                           std::placeholders::_2));
     _http_server->Post(CSS_GET_LIST,
                        (httplib::Server::Handler) std::bind(&GatewayServer::GetChatSessionList, this,
                                                             std::placeholders::_1, std::placeholders::_2));
@@ -1012,6 +1018,102 @@ void GatewayServer::FriendSearch(const httplib::Request &request, httplib::Respo
     response.set_content(rsp.SerializeAsString(), "application/x-protobuf");
 }
 
+void GatewayServer::ChangeGroupName(const httplib::Request &request, httplib::Response &response)
+{
+    SetChatSessionNameRequest req;
+    SetChatSessionNameResponse rsp;
+
+    LOG_DEBUG("收到修改群聊名称请求");
+
+    auto err_response = [&req, &rsp, &response](const std::string &errmsg) -> void
+    {
+        rsp.set_success(false);
+        rsp.set_error(errmsg);
+        response.set_content(rsp.SerializeAsString(), "application/x-protobuf");
+    };
+
+    bool ret = req.ParseFromString(request.body);
+    if (ret == false)
+    {
+        LOG_ERROR("修改群聊名称请求失败！");
+        return err_response("修改群聊名称请求失败！");
+    }
+    // 2. 客户端身份识别与鉴权
+    std::string ssid = req.session_id();
+    auto uid = _redis_session->Uid(ssid);
+    if (!uid)
+    {
+        LOG_ERROR("{} 获取登录会话关联用户信息失败！", ssid);
+        return err_response("获取登录会话关联用户信息失败！");
+    }
+    req.set_user_id(*uid);
+    auto channel = _channels->Choose(_friend_service_name);
+    if (!channel)
+    {
+        LOG_ERROR("{} 未找到可提供业务处理的用户子服务节点！", req.request_id());
+        return err_response("未找到可提供业务处理的用户子服务节点！");
+    }
+
+    im::FriendService_Stub stub(channel.get());
+    brpc::Controller cntl;
+    stub.SetChatSessionName(&cntl, &req, &rsp, nullptr);
+    if (cntl.Failed())
+    {
+        LOG_ERROR("{} 好友子服务调用失败！", req.request_id());
+        return err_response("好友子服务调用失败！");
+    }
+    // 3. 得到用户子服务的响应后，将响应内容进行序列化作为http响应正文
+    response.set_content(rsp.SerializeAsString(), "application/x-protobuf");
+}
+
+void GatewayServer::ExitGroup(const httplib::Request &request, httplib::Response &response)
+{
+    ChatSessionQuitRequest req;
+    ChatSessionQuitResponse rsp;
+
+    LOG_DEBUG("收到修改群聊名称请求");
+
+    auto err_response = [&req, &rsp, &response](const std::string &errmsg) -> void
+    {
+        rsp.set_success(false);
+        rsp.set_error(errmsg);
+        response.set_content(rsp.SerializeAsString(), "application/x-protobuf");
+    };
+
+    bool ret = req.ParseFromString(request.body);
+    if (ret == false)
+    {
+        LOG_ERROR("修改群聊名称请求失败！");
+        return err_response("修改群聊名称请求失败！");
+    }
+    // 2. 客户端身份识别与鉴权
+    std::string ssid = req.session_id();
+    auto uid = _redis_session->Uid(ssid);
+    if (!uid)
+    {
+        LOG_ERROR("{} 获取登录会话关联用户信息失败！", ssid);
+        return err_response("获取登录会话关联用户信息失败！");
+    }
+    req.set_user_id(*uid);
+    auto channel = _channels->Choose(_friend_service_name);
+    if (!channel)
+    {
+        LOG_ERROR("{} 未找到可提供业务处理的用户子服务节点！", req.request_id());
+        return err_response("未找到可提供业务处理的用户子服务节点！");
+    }
+
+    im::FriendService_Stub stub(channel.get());
+    brpc::Controller cntl;
+    stub.ChatSessionQuit(&cntl, &req, &rsp, nullptr);
+    if (cntl.Failed())
+    {
+        LOG_ERROR("{} 好友子服务调用失败！", req.request_id());
+        return err_response("好友子服务调用失败！");
+    }
+    // 3. 得到用户子服务的响应后，将响应内容进行序列化作为http响应正文
+    response.set_content(rsp.SerializeAsString(), "application/x-protobuf");
+}
+
 void GatewayServer::GetFriendList(const httplib::Request &request, httplib::Response &response)
 {
     // 1. 取出http请求正文，将正文进行反序列化
@@ -1463,7 +1565,7 @@ void GatewayServer::NewMessage(const httplib::Request &request, httplib::Respons
                 continue; // 不通知自己
             auto conn = _connections->GetConnection(notify_uid);
             if (!conn)
-            {
+            {   //
                 continue;
             }
             NotifyMessage notify;

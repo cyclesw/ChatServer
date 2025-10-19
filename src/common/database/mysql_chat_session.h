@@ -17,11 +17,13 @@ namespace im
         bool Insert(ChatSession &cs);
         bool Insert(ChatSession &&cs);
 
-        bool Remove(const std::string& ssid);
+        bool Remove(const std::string& csid);
 
         bool Remove(const std::string& uid, const std::string& pid);
 
-        std::shared_ptr<ChatSession> Select(const std::string& ssid);
+        bool Update(const std::shared_ptr<ChatSession> &cs);
+
+        std::shared_ptr<ChatSession> Select(const std::string& csid);
 
         std::vector<SingleChatSession> GetSingleChatSession(const std::string& uid);
 

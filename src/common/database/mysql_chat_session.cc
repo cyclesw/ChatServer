@@ -43,19 +43,19 @@ namespace im
         return true;
     }
 
-    bool ChatSessionTable::Remove(const std::string& ssid)
+    bool ChatSessionTable::Remove(const std::string& csid)
     {
         try {
             odb::transaction trans(_db->begin());
             typedef odb::query<ChatSession> query;
             typedef odb::result<ChatSession> result;
-            _db->erase_query<ChatSession>(query::chat_session_id == ssid);
+            _db->erase_query<ChatSession>(query::chat_session_id == csid);
 
             typedef odb::query<ChatSessionMember> mquery;
-            _db->erase_query<ChatSessionMember>(mquery::session_id == ssid);
+            _db->erase_query<ChatSessionMember>(mquery::session_id == csid);
             trans.commit();
         }catch (std::exception &e) {
-            LOG_ERROR("删除会话失败 {}:{}！", ssid, e.what());
+            LOG_ERROR("删除会话失败 {}:{}！", csid, e.what());
             return false;
         }
         return true;
@@ -86,18 +86,34 @@ namespace im
         }
         return true;
     }
-    
-    std::shared_ptr<ChatSession> ChatSessionTable::Select(const std::string& ssid)
+
+    bool ChatSessionTable::Update(const std::shared_ptr<ChatSession> &cs)
+    {
+        try
+        {
+            odb::transaction trans(_db->begin());
+            _db->update(*cs);
+            trans.commit();
+        }
+        catch (std::exception &e)
+        {
+            LOG_ERROR("更新会话失败: {}-{}!", cs->chat_session_name(), e.what());
+            return false;
+        }
+        return true;
+    }
+
+    std::shared_ptr<ChatSession> ChatSessionTable::Select(const std::string& csid)
     {
         std::shared_ptr<ChatSession> res;
         try {
             odb::transaction trans(_db->begin());
             typedef odb::query<ChatSession> query;
             typedef odb::result<ChatSession> result;
-            res.reset(_db->query_one<ChatSession>(query::chat_session_id == ssid));
+            res.reset(_db->query_one<ChatSession>(query::chat_session_id == csid));
             trans.commit();
         }catch (std::exception &e) {
-            LOG_ERROR("通过会话ID获取会话信息失败 {}:{}！", ssid, e.what());
+            LOG_ERROR("通过会话ID获取会话信息失败 {}:{}！", csid, e.what());
         }
         return res;
     }
